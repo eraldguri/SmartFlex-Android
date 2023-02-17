@@ -1,61 +1,45 @@
 package com.erald_guri.smartflex_android.ui.quotes
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.erald_guri.smartflex_android.R
+import com.erald_guri.smartflex_android.BaseFragment
 import com.erald_guri.smartflex_android.adapters.CardAdapter
-import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.CardModel
 import com.erald_guri.smartflex_android.databinding.FragmentQuotesBinding
-import com.erald_guri.smartflex_android.interfaces.OnRecyclerItemClickListener
-import com.google.android.material.snackbar.Snackbar
+import com.erald_guri.smartflex_android.view_models.QuotesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class QuotesFragment : BaseFragment<FragmentQuotesBinding>(
     FragmentQuotesBinding::inflate
 ) {
 
+    private val viewModel by viewModels<QuotesViewModel>()
+
+    private var cardAdapter: CardAdapter? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cardAdapter = CardAdapter(requireContext(), onRecyclerItemClickListener)
+        fetchQuotes()
 
-        val color = arrayOf(
-            ContextCompat.getColor(requireContext(), R.color.pink),
-            ContextCompat.getColor(requireContext(), R.color.blue),
-            ContextCompat.getColor(requireContext(), R.color.purple),
-            ContextCompat.getColor(requireContext(), R.color.green)
-        )
+    }
 
-        val items = ArrayList<CardModel>()
-        val chineseIdiomsCard = CardModel(1, "Chinese Idioms", "成语(chéngyǔ)", color[0])
-        val motivationalQuotesCard = CardModel(2, "Motivational Quotes", "Motivate yourself", color[1])
-        val loveQuotesCard = CardModel(3, "Love Quotes", "Love yourself first", color[2])
-        val darkQuotesCard = CardModel(4, "Dark Quotes", "Embrace the darkness", color[3])
+    private fun fetchQuotes() {
+        viewModel.getQuotes()
+        viewModel.quotes.observe(viewLifecycleOwner) {
+            setupUI(it)
+        }
+    }
 
-        items.add(chineseIdiomsCard)
-        items.add(motivationalQuotesCard)
-        items.add(loveQuotesCard)
-        items.add(darkQuotesCard)
-
-        cardAdapter.setItems(items)
-        cardAdapter.setListener(onRecyclerItemClickListener)
-
+    private fun setupUI(items: ArrayList<CardModel>) {
+        cardAdapter = CardAdapter(items, CardAdapter.TYPE_SIMPLE_CARD)
         binding.includeRecycler.recycler.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = cardAdapter
         }
-
     }
 
-    private val onRecyclerItemClickListener = object : OnRecyclerItemClickListener<CardModel> {
-        override fun onItemClick(item: CardModel) {
-            Snackbar.make(binding.root, "${item.title} clicked", Snackbar.LENGTH_SHORT).show()
-        }
-
-    }
 }
