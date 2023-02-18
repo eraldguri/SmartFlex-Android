@@ -9,6 +9,8 @@ import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.adapters.ButtonAdapter
 import com.erald_guri.smartflex_android.data.model.ButtonModel
 import com.erald_guri.smartflex_android.databinding.FragmentTasksBinding
+import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
+import com.erald_guri.smartflex_android.interfaces.OnRecyclerItemClickListener
 import com.erald_guri.smartflex_android.utils.GridLayoutDecoration
 
 class TasksFragment : BaseFragment<FragmentTasksBinding>(
@@ -25,25 +27,33 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_dry_24)?.mutate()
         )
 
-        val buttons = ArrayList<ButtonModel>()
-        val buttonAll = ButtonModel(1, "All", null, "#ffffff")
-        val buttonEducation = ButtonModel(2, "Education", drawables[0], "#dcf4f5")
-        val buttonSport = ButtonModel(3, "Sport", drawables[1], "#feeae6")
-        val buttonMeeting = ButtonModel(4, "Meeting", drawables[2], "#fcf1dd")
-        val buttonFriends = ButtonModel(5, "Friends", drawables[3], "#ceecfe")
 
-        buttons.add(buttonAll)
+        val buttons = ArrayList<ButtonModel>()
+        val buttonEducation = ButtonModel(1, "Education", drawables[0], "#dcf4f5")
+        val buttonSport = ButtonModel(2, "Sport", drawables[1], "#feeae6")
+        val buttonMeeting = ButtonModel(3, "Meeting", drawables[2], "#fcf1dd")
+        val buttonFriends = ButtonModel(4, "Friends", drawables[3], "#ceecfe")
+
         buttons.add(buttonEducation)
         buttons.add(buttonSport)
         buttons.add(buttonMeeting)
         buttons.add(buttonFriends)
 
         val buttonAdapter = ButtonAdapter(buttons)
+        buttonAdapter.setOnItemClickListener(onRecyclerItemClickListener)
         binding.includeRecyclerCategory.recycler.apply {
             layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
 //            addItemDecoration(GridLayoutDecoration(3, 3, true))
             adapter = buttonAdapter
         }
+    }
+
+    private val onRecyclerItemClickListener = object : OnItemClickListener {
+        override fun onItemClick(position: Int) {
+
+        }
+
+
     }
 
 }
