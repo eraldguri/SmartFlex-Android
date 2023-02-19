@@ -26,5 +26,13 @@
         android:id="@+id/nav_tasks"
         android:name="com.erald_guri.smartflex_android.ui.tasks.TasksFragment"
         android:label="@string/menu_tasks"
-        tools:layout="@layout/fragment_tasks" />
+        tools:layout="@layout/fragment_tasks" >
+        <action
+            android:id="@+id/action_nav_tasks_to_categoryDialogFragment"
+            app:destination="@id/categoryDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/categoryDialogFragment"
+        android:name="com.erald_guri.smartflex_android.ui.tasks.CategoryDialogFragment"
+        android:label="CategoryDialogFragment" />
 </navigation>

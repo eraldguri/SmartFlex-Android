@@ -1,4 +1,4 @@
-package com.erald_guri.smartflex_android
+package com.erald_guri.smartflex_android.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

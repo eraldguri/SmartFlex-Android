@@ -1,17 +1,15 @@
 package com.erald_guri.smartflex_android.holders
 
-import androidx.recyclerview.widget.RecyclerView
 import com.erald_guri.smartflex_android.R
+import com.erald_guri.smartflex_android.base.BaseViewHolder
 import com.erald_guri.smartflex_android.data.model.ButtonModel
 import com.erald_guri.smartflex_android.databinding.LayoutButtonListBinding
-import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
 
 class ButtonViewHolder(
-    private val binding: LayoutButtonListBinding,
-    private val listener: OnItemClickListener
-): RecyclerView.ViewHolder(binding.root) {
+    private val binding: LayoutButtonListBinding
+): BaseViewHolder<ButtonModel>(binding.root) {
 
-    fun bind(item: ButtonModel) {
+    override fun onBind(item: ButtonModel) {
         binding.root.apply {
             text = item.text
             setCompoundDrawablesWithIntrinsicBounds(item.icon, null, null, null)
