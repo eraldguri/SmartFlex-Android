@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.data.model.ButtonModel
 import com.erald_guri.smartflex_android.databinding.LayoutButtonListBinding
 import com.erald_guri.smartflex_android.holders.ButtonViewHolder
@@ -32,12 +33,13 @@ class ButtonAdapter(
 
         holder.itemView.setOnClickListener {
             rowIndex = position
-            if (rowIndex == holder.adapterPosition) {
-                holder.setSelectedState(item)
-            } else {
-                holder.setUnSelectedState(item)
-            }
-            notifyItemChanged(rowIndex)
+            notifyDataSetChanged()
+        }
+
+        if (rowIndex == position) {
+            holder.setSelectedState()
+        } else {
+            holder.setUnSelectedState()
         }
 
     }

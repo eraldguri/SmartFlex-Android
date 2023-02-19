@@ -16,16 +16,14 @@ class ButtonViewHolder(
             text = item.text
             setCompoundDrawablesWithIntrinsicBounds(item.icon, null, null, null)
             compoundDrawablePadding = 16
-
-            binding.root.setBackgroundResource(R.drawable.button_round_corners_unselected)
         }
     }
 
-    fun setSelectedState(item: ButtonModel) {
+    fun setSelectedState() {
         binding.root.setBackgroundResource(R.drawable.button_round_selected)
     }
 
-    fun setUnSelectedState(item: ButtonModel) {
+    fun setUnSelectedState() {
         binding.root.setBackgroundResource(R.drawable.button_round_corners_unselected)
     }
 
