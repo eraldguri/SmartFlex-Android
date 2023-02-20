@@ -3,11 +3,9 @@ package com.erald_guri.smartflex_android.ui.tasks
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.erald_guri.smartflex_android.base.BaseFragment
-import com.erald_guri.smartflex_android.adapters.ButtonAdapter
-import com.erald_guri.smartflex_android.data.model.ButtonModel
+import com.erald_guri.smartflex_android.adapters.PriorityAdapter
 import com.erald_guri.smartflex_android.databinding.FragmentTasksBinding
 import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
 import com.erald_guri.smartflex_android.view_models.TasksViewModel
@@ -20,30 +18,26 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(
 
     private val viewModel by viewModels<TasksViewModel>()
 
-    private var buttonAdapter: ButtonAdapter? = null
+    private var priorityAdapter: PriorityAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.categories(false)
-        viewModel.categories.observe(viewLifecycleOwner) {
-            buttonAdapter = ButtonAdapter(it, false)
-            buttonAdapter?.setOnItemClickListener(onRecyclerItemClickListener)
-            binding.includeRecyclerCategory.recycler.apply {
-                layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-                adapter = buttonAdapter
+        viewModel.priorities()
+        viewModel.priorities.observe(viewLifecycleOwner) {
+            priorityAdapter = PriorityAdapter(it)
+            priorityAdapter?.setOnItemClickListener(onRecyclerItemClickListener)
+            binding.includeRecyclerPriority.recycler.apply {
+                layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+                adapter = priorityAdapter
             }
         }
 
     }
 
-    private val onRecyclerItemClickListener = object : OnItemClickListener<ButtonModel> {
-        override fun onItemClick(position: Int, item: ButtonModel) {
-            val lastItemPosition = buttonAdapter?.itemCount?.minus(1)
-            if (lastItemPosition == position) {
-                val action = TasksFragmentDirections.actionNavTasksToCategoryDialogFragment()
-                findNavController().navigate(action)
-            }
+    private val onRecyclerItemClickListener = object : OnItemClickListener<String> {
+        override fun onItemClick(position: Int, item: String) {
+
         }
     }
 

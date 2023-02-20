@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fbfbfa"
+    android:background="#f8eee7"
     tools:context=".ui.tasks.TasksFragment">
 
     <TextView
@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/lato_bold"
+        android:fontFamily="@font/lato"
+        android:textStyle="bold"
         android:text="@string/task_title"
-        android:textColor="#606160"
+        android:textColor="#1d1d1e"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,31 +27,28 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/edittext_round_corners"
         android:ems="10"
+        style="@style/EditTextStyle"
         android:inputType="textPersonName"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textColor="#9a9b9a"
-        android:textColorHint="#9a9b9a"
+        android:hint="@string/task_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <TextView
-        android:id="@+id/tv_category"
+        android:id="@+id/tv_priority"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_bold"
-        android:text="@string/category"
+        android:text="@string/priority"
         android:textColor="#606160"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_title" />
 
     <include
-        android:id="@+id/include_recycler_category"
+        android:id="@+id/include_recycler_priority"
         layout="@layout/layout_recycler"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,133 +58,120 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_priority" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_starts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_bold"
         android:text="Starts"
         android:textColor="#606160"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include_recycler_category" />
+        app:layout_constraintTop_toBottomOf="@+id/include_recycler_priority" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/ed_starts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/edittext_round_corners"
+        style="@style/EditTextStyle"
         android:ems="10"
+        android:hint="Starts"
         android:inputType="textPersonName"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textColor="#9a9b9a"
-        android:textColorHint="#9a9b9a"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2"
+        app:layout_constraintEnd_toStartOf="@+id/ed_ends"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_starts" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/ed_ends"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/edittext_round_corners"
+        style="@style/EditTextStyle"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textColor="#9a9b9a"
-        android:textColorHint="#9a9b9a"
+        android:hint="Ends"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_starts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toEndOf="@+id/ed_starts"
+        app:layout_constraintTop_toTopOf="@+id/ed_starts" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_ends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/lato_bold"
         android:text="Ends"
         android:textColor="#606160"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-        app:layout_constraintTop_toBottomOf="@+id/include_recycler_category" />
+        app:layout_constraintStart_toStartOf="@+id/ed_ends"
+        app:layout_constraintTop_toBottomOf="@+id/include_recycler_priority" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_bold"
         android:text="Location"
         android:textColor="#606160"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_starts" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/ed_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/edittext_round_corners"
+        style="@style/EditTextStyle"
         android:ems="10"
+        android:hint="Location"
         android:inputType="textPersonName"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textColor="#9a9b9a"
-        android:textColorHint="#9a9b9a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_location" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_bold"
         android:text="Description"
         android:textColor="#606160"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_location" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/ed_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:background="@drawable/edittext_round_corners"
-        android:lines="4"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textColor="#9a9b9a"
-        android:textColorHint="#9a9b9a"
+        style="@style/EditTextStyle"
+        android:ems="10"
+        android:hint="Description"
+        android:lines="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
-    <Button
-        android:id="@+id/button"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_save"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -194,6 +179,7 @@
         android:layout_marginBottom="32dp"
         android:text="Create Task"
         android:textAllCaps="false"
+        android:textSize="16sp"
         android:background="@drawable/button_round_selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
