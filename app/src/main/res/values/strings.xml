@@ -16,4 +16,5 @@
     <string name="task_title">Task Title</string>
     <string name="category">Category</string>
     <string name="priority">Priority</string>
+    <string name="create_task">Create Task</string>
 </resources>

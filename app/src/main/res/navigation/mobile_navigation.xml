@@ -16,6 +16,15 @@
         android:name="com.erald_guri.smartflex_android.ui.quotes.QuotesFragment"
         android:label="@string/menu_quotes"
         tools:layout="@layout/fragment_quotes" />
+    <fragment
+        android:id="@+id/nav_tasks"
+        android:name="com.erald_guri.smartflex_android.ui.tasks.TaskFragment"
+        android:label="@string/menu_tasks"
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_nav_tasks_to_nav_new_task"
+            app:destination="@id/nav_new_task" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -23,14 +32,10 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
-        android:id="@+id/nav_tasks"
+        android:id="@+id/nav_new_task"
         android:name="com.erald_guri.smartflex_android.ui.tasks.NewTasksFragment"
         android:label="@string/menu_tasks"
-        tools:layout="@layout/fragment_new_task" >
-        <action
-            android:id="@+id/action_nav_tasks_to_categoryDialogFragment"
-            app:destination="@id/categoryDialogFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_new_task" />
     <dialog
         android:id="@+id/categoryDialogFragment"
         android:name="com.erald_guri.smartflex_android.ui.tasks.CategoryDialogFragment"

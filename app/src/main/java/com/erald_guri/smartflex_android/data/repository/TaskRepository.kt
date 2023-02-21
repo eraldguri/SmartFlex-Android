@@ -6,6 +6,8 @@ import javax.inject.Inject
 
 class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
+    suspend fun getAllTasks(): List<TaskModel> = taskDao.selectAll()
+
     suspend fun createTask(task: TaskModel) = taskDao.saveTask(task)
 
 }

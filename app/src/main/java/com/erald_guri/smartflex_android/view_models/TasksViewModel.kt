@@ -20,6 +20,9 @@ class TasksViewModel @Inject constructor(val app: Application, private val taskR
     private var _priorities = MutableLiveData<ArrayList<String>>()
     val priorities: LiveData<ArrayList<String>> = _priorities
 
+    private var _tasks = MutableLiveData<List<TaskModel>>()
+    val tasks: LiveData<List<TaskModel>> = _tasks
+
     fun priorities() {
         val priorityList = ArrayList<String>()
         priorityList.add("Low")
@@ -27,6 +30,12 @@ class TasksViewModel @Inject constructor(val app: Application, private val taskR
         priorityList.add("High")
         priorityList.add("Urgent")
         _priorities.postValue(priorityList)
+    }
+
+    fun getAllTasks() {
+        viewModelScope.launch {
+            _tasks.postValue(taskRepository.getAllTasks())
+        }
     }
 
     fun saveTask(task: TaskModel) {
