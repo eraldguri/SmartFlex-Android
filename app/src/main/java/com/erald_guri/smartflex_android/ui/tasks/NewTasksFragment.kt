@@ -6,7 +6,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.adapters.PriorityAdapter
-import com.erald_guri.smartflex_android.databinding.FragmentTasksBinding
+import com.erald_guri.smartflex_android.data.model.TaskModel
+import com.erald_guri.smartflex_android.databinding.FragmentNewTaskBinding
 import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
 import com.erald_guri.smartflex_android.view_models.TasksViewModel
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -15,8 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
 @AndroidEntryPoint
-class TasksFragment : BaseFragment<FragmentTasksBinding>(
-    FragmentTasksBinding::inflate
+class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
+    FragmentNewTaskBinding::inflate
 ) {
 
     private val viewModel by viewModels<TasksViewModel>()
@@ -26,6 +27,9 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(
     private lateinit var selectedDate: String
     private var hasFinishedSelectingDate: Boolean = false
     private var isFirstDateTimePickerSelected: Boolean = false
+    private var selectedPriority: String = ""
+    private var starts: String = ""
+    private var ends: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,6 +52,9 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(
             isFirstDateTimePickerSelected = false
             dateTimePickerDialog()
         }
+
+        //TODO: validation
+        binding.btnSave.setOnClickListener { createNewTask() }
 
     }
 
@@ -78,21 +85,42 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(
             now.get(Calendar.MINUTE),
             true
         )
-        childFragmentManager.let { timePickerDialog.show(it, "Datepickerdialog") };
+        childFragmentManager.let { timePickerDialog.show(it, "Timepickerdialog") };
     }
 
     private val onTimeSet = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute, second ->
         val selectedTime = "$selectedDate  $hourOfDay:$minute"
         if (isFirstDateTimePickerSelected) {
             binding.edStarts.setText(selectedTime)
+            starts = selectedTime
         } else {
+            ends = selectedTime
             binding.edEnds.setText(selectedTime)
         }
     }
 
     private val onRecyclerItemClickListener = object : OnItemClickListener<String> {
         override fun onItemClick(position: Int, item: String) {
+            selectedPriority = item
+        }
+    }
 
+    private fun createNewTask() {
+        //TODO: save date and time to long in database
+        //TODO: error handling, loading state
+        //TODO: save as draft when exit
+        //TODO: permissions
+        //TODO: get file from storage
+        binding.apply {
+            val task = TaskModel(
+                tvTitle.text.toString(),
+                selectedPriority,
+                starts,
+                ends,
+                tvLocation.text.toString(),
+                tvDescription.text.toString()
+            )
+            viewModel.saveTask(task)
         }
     }
 
