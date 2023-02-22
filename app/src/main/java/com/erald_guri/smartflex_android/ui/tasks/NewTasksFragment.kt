@@ -2,11 +2,10 @@ package com.erald_guri.smartflex_android.ui.tasks
 
 import android.os.Bundle
 import android.view.View
-import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.adapters.PriorityAdapter
+import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.TaskModel
 import com.erald_guri.smartflex_android.databinding.FragmentNewTaskBinding
 import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
@@ -16,7 +15,7 @@ import com.erald_guri.smartflex_android.view_models.TasksViewModel
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Calendar
+import java.util.*
 
 @AndroidEntryPoint
 class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
@@ -108,7 +107,7 @@ class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
             binding.edEnds.setText(selectedTime)
         }
     }
-
+    
     private val onRecyclerItemClickListener = object : OnItemClickListener<String> {
         override fun onItemClick(position: Int, item: String) {
             selectedPriority = item

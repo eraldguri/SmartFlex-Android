@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,37 +9,37 @@
 
     <TextView
         android:id="@+id/tv_title"
+        style="@style/TextViewMainStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/task_title"
-        style="@style/TextViewMainStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/ed_title"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        style="@style/EditTextStyle"
-        android:inputType="textPersonName"
         android:hint="@string/task_title"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <TextView
         android:id="@+id/tv_priority"
+        style="@style/TextViewMainStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        style="@style/TextViewMainStyle"
         android:text="@string/priority"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_title" />
@@ -60,23 +59,23 @@
 
     <TextView
         android:id="@+id/tv_starts"
+        style="@style/TextViewMainStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Starts"
-        style="@style/TextViewMainStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include_recycler_priority" />
 
     <EditText
         android:id="@+id/ed_starts"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        style="@style/EditTextStyle"
         android:ems="10"
         android:focusable="false"
         android:hint="Starts"
@@ -88,14 +87,14 @@
 
     <EditText
         android:id="@+id/ed_ends"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        style="@style/EditTextStyle"
         android:ems="10"
-        android:hint="Ends"
         android:focusable="false"
+        android:hint="Ends"
         app:layout_constraintBottom_toBottomOf="@+id/ed_starts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -104,36 +103,36 @@
 
     <TextView
         android:id="@+id/tv_ends"
+        style="@style/TextViewMainStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        style="@style/TextViewMainStyle"
         android:text="Ends"
         app:layout_constraintStart_toStartOf="@+id/ed_ends"
         app:layout_constraintTop_toBottomOf="@+id/include_recycler_priority" />
 
     <TextView
         android:id="@+id/tv_location"
+        style="@style/TextViewMainStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        style="@style/TextViewMainStyle"
         android:text="Location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_starts" />
 
     <EditText
         android:id="@+id/ed_location"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        style="@style/EditTextStyle"
-        android:ems="10"
         android:drawableStart="@drawable/ic_baseline_location_on_24"
         android:drawablePadding="8dp"
+        android:ems="10"
         android:hint="Location"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -142,33 +141,34 @@
 
     <TextView
         android:id="@+id/tv_description"
+        style="@style/TextViewMainStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        style="@style/TextViewMainStyle"
         android:text="Description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_location" />
 
     <EditText
         android:id="@+id/ed_description"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        style="@style/EditTextStyle"
         android:ems="10"
+        android:gravity="start|top"
         android:hint="Description"
+        android:inputType="textMultiLine"
         android:lines="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
@@ -184,12 +184,12 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Attachment"
-            android:fontFamily="@font/lato_bold"
-            android:textColor="#606160"
             android:drawableStart="@drawable/ic_baseline_attach_file_24"
             android:drawablePadding="8dp"
+            android:fontFamily="@font/lato_bold"
             android:gravity="center"
+            android:text="Attachment"
+            android:textColor="#606160"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -198,15 +198,45 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_save"
+        style="@style/MainButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:text="@string/create_task"
-        style="@style/MainButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/TextViewMainStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Choose a color"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        style="@style/EditTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
