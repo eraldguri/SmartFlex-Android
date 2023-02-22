@@ -5,11 +5,13 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class TaskModel(
-    @PrimaryKey
-    val title: String,
-    val priority: String,
-    val starts: String,
-    val ends: String,
-    val location: String,
-    val description: String
-)
+    var title: String,
+    var priority: String,
+    var starts: String,
+    var ends: String,
+    var location: String,
+    var description: String
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
+}

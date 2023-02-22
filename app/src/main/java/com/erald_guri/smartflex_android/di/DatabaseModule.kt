@@ -18,7 +18,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideFlexDatabase(@ApplicationContext context: Context): FlexDatabase {
-        return Room.databaseBuilder(context, FlexDatabase::class.java, "smart-flex.db").build()
+        return Room.databaseBuilder(context, FlexDatabase::class.java, "smart-flex.db").allowMainThreadQueries().build()
     }
 
     @Provides

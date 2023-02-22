@@ -2,6 +2,7 @@ package com.erald_guri.smartflex_android.ui.tasks
 
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.erald_guri.smartflex_android.base.BaseFragment
@@ -9,6 +10,8 @@ import com.erald_guri.smartflex_android.adapters.PriorityAdapter
 import com.erald_guri.smartflex_android.data.model.TaskModel
 import com.erald_guri.smartflex_android.databinding.FragmentNewTaskBinding
 import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
+import com.erald_guri.smartflex_android.utils.isEmpty
+import com.erald_guri.smartflex_android.utils.validate
 import com.erald_guri.smartflex_android.view_models.TasksViewModel
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -53,8 +56,15 @@ class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
             dateTimePickerDialog()
         }
 
-        //TODO: validation
-        binding.btnSave.setOnClickListener { createNewTask() }
+        binding.btnSave.setOnClickListener {
+            if (binding.edTitle.text.isNotEmpty()) {
+                createNewTask()
+            } else {
+                binding.edTitle.validate("Title should be empty") { s ->
+                    s.isEmpty(binding.edTitle)
+                }
+            }
+        }
 
     }
 
@@ -106,19 +116,18 @@ class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
     }
 
     private fun createNewTask() {
-        //TODO: save date and time to long in database
         //TODO: error handling, loading state
         //TODO: save as draft when exit
         //TODO: permissions
         //TODO: get file from storage
         binding.apply {
             val task = TaskModel(
-                tvTitle.text.toString(),
+                edTitle.text.toString(),
                 selectedPriority,
                 starts,
                 ends,
-                tvLocation.text.toString(),
-                tvDescription.text.toString()
+                edLocation.text.toString(),
+                edDescription.text.toString()
             )
             viewModel.saveTask(task)
         }

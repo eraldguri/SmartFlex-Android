@@ -10,4 +10,6 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
     suspend fun createTask(task: TaskModel) = taskDao.saveTask(task)
 
+    suspend fun deleteTask(task: TaskModel) = taskDao.deleteTask(task)
+
 }
