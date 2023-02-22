@@ -10,4 +10,12 @@
     <string name="menu_home">Home</string>
     <string name="menu_quotes">Quotes</string>
     <string name="menu_slideshow">Slideshow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_tasks">Tasks</string>
+    <string name="task_title">Task Title</string>
+    <string name="category">Category</string>
+    <string name="priority">Priority</string>
+    <string name="create_task">Create Task</string>
+    <string name="menu_settings">Settings</string>
 </resources>

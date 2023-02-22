@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_tasks">Tasks</string>
+    <string name="task_title">Task Title</string>
+    <string name="category">Category</string>
+    <string name="priority">Priority</string>
+    <string name="create_task">Create Task</string>
+    <string name="menu_settings">Settings</string>
+</resources>

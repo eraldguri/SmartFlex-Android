@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.SmartFlexAndroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimary">#f8eee7</item>
         <item name="colorPrimaryVariant">@color/blue_700</item>
         <item name="colorOnPrimary">@color/white_500</item>
         <!-- Secondary brand color. -->
@@ -19,7 +19,33 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.SmartFlexAndroid.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.SmartFlexAndroid.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/gray</item>
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="elevation">0dp</item>
+    </style>
 
     <style name="Theme.SmartFlexAndroid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">#6f6e6e</item>
+        <item name="android:textColorHint">#6f6e6e</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:backgroundTint">#3D3D40</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+    </style>
+
+    <style name="MainButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_round_selected</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/lato</item>
+    </style>
+
+    <style name="TextViewMainStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#1d1d1e</item>
+    </style>
 </resources>
