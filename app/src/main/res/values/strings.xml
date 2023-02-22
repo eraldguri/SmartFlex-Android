@@ -17,4 +17,5 @@
     <string name="category">Category</string>
     <string name="priority">Priority</string>
     <string name="create_task">Create Task</string>
+    <string name="menu_settings">Settings</string>
 </resources>
