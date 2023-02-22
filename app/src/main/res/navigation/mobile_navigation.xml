@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_tasks">
+    app:startDestination="@+id/nav_settings">
 
     <fragment
         android:id="@+id/nav_home"
@@ -40,5 +40,23 @@
         android:id="@+id/nav_settings"
         android:name="com.erald_guri.smartflex_android.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.erald_guri.smartflex_android.ui.settings.fragments.CategoryFragment"
+        android:label="@string/category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_categoryDialogFragment"
+            app:destination="@id/categoryDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/categoryDialogFragment"
+        android:name="com.erald_guri.smartflex_android.dialogs.CategoryDialogFragment"
+        android:label="dialog_category"
+        tools:layout="@layout/dialog_category" />
 </navigation>

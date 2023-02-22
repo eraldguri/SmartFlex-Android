@@ -1,17 +1,15 @@
 package com.erald_guri.smartflex_android.ui.settings
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.adapters.SettingsAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.SettingsModel
 import com.erald_guri.smartflex_android.databinding.FragmentSettingsBinding
+import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
     FragmentSettingsBinding::inflate
@@ -31,10 +29,22 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
         settings.add(language)
         settings.add(contacts)
 
-        val settingsAdapter = SettingsAdapter(settings)
+        val settingsAdapter = SettingsAdapter(settings, onItemClickListener)
         binding.includeRecycler.recycler.apply {
             layoutManager = GridLayoutManager(requireContext(), 4)
             adapter = settingsAdapter
         }
+    }
+
+    private val onItemClickListener = object : OnItemClickListener<SettingsModel> {
+        override fun onItemClick(position: Int, item: SettingsModel) {
+            when (position) {
+                0 -> {
+                    val action = SettingsFragmentDirections.actionNavSettingsToCategoryFragment()
+                    findNavController().navigate(action)
+                }
+            }
+        }
+
     }
 }
