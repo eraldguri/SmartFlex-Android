@@ -10,7 +10,9 @@ import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.SettingsModel
 import com.erald_guri.smartflex_android.databinding.FragmentSettingsBinding
 import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
     FragmentSettingsBinding::inflate
 ) {
@@ -19,10 +21,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         val settings: ArrayList<SettingsModel> = ArrayList()
-        val categories = SettingsModel("Category", R.drawable.ic_baseline_category_24)
-        val tags = SettingsModel("Tags", R.drawable.ic_baseline_tag_24)
-        val language = SettingsModel("Language", R.drawable.ic_baseline_language_24)
-        val contacts = SettingsModel("Contacts", R.drawable.ic_baseline_contacts_24)
+        val categories = SettingsModel("Category", R.drawable.ic_baseline_category_24, "#f8bf7c")
+        val tags = SettingsModel("Tags", R.drawable.ic_baseline_tag_24, "#6589e5")
+        val language = SettingsModel("Language", R.drawable.ic_baseline_language_24, "#e56470")
+        val contacts = SettingsModel("Contacts", R.drawable.ic_baseline_contacts_24, "#3f5061")
 
         settings.add(categories)
         settings.add(tags)

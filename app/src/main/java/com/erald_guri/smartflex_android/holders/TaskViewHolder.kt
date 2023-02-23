@@ -7,7 +7,7 @@ import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 
 class TaskViewHolder(
     private val binding: LayoutTaskCardBinding,
-    private val onTaskListener: OnTaskListener
+    private val onTaskListener: OnTaskListener<TaskModel>
 ) : BaseViewHolder<TaskModel>(binding.root) {
 
     override fun onBind(item: TaskModel) {

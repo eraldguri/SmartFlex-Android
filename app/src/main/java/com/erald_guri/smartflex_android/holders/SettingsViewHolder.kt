@@ -1,5 +1,6 @@
 package com.erald_guri.smartflex_android.holders
 
+import android.graphics.Color
 import com.erald_guri.smartflex_android.base.BaseViewHolder
 import com.erald_guri.smartflex_android.data.model.SettingsModel
 import com.erald_guri.smartflex_android.databinding.LayoutSettingsItemBinding
@@ -18,6 +19,8 @@ class SettingsViewHolder(
             root.setOnClickListener {
                 onItemClickListener.onItemClick(adapterPosition, item)
             }
+
+            binding.materialCardView.setCardBackgroundColor(Color.parseColor(item.color))
         }
     }
 

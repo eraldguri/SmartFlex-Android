@@ -58,5 +58,6 @@
         android:id="@+id/categoryDialogFragment"
         android:name="com.erald_guri.smartflex_android.dialogs.CategoryDialogFragment"
         android:label="dialog_category"
-        tools:layout="@layout/dialog_category" />
+        tools:layout="@layout/dialog_category" >
+    </dialog>
 </navigation>

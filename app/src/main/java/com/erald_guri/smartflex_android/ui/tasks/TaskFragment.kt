@@ -45,7 +45,7 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(
         }
     }
 
-    private val onTaskListener = object : OnTaskListener {
+    private val onTaskListener = object : OnTaskListener<TaskModel> {
         override fun onItemClick(task: TaskModel) {
             Snackbar.make(binding.root, "Item clicked", Snackbar.LENGTH_SHORT).show()
         }

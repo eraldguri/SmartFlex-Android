@@ -21,4 +21,5 @@
     <string name="add_new_category">Add new category</string>
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
+    <string name="add_category">Add Category</string>
 </resources>
