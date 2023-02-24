@@ -29,20 +29,32 @@ class TasksViewModel @Inject constructor(val app: Application, private val taskR
     }
 
     fun getAllTasks() {
-        viewModelScope.launch {
-            _tasks.postValue(taskRepository.getAllTasks())
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _tasks.postValue(taskRepository.getAllTasks())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun saveTask(task: TaskModel) {
-        viewModelScope.launch {
-            taskRepository.createTask(task)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                taskRepository.createTask(task)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun removeTask(task: TaskModel) {
-        viewModelScope.launch {
-            taskRepository.deleteTask(task)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                taskRepository.deleteTask(task)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 

@@ -10,7 +10,7 @@ import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 
 class TaskAdapter(
     private val tasks: MutableList<TaskModel>,
-    private val onTaskListener: OnTaskListener
+    private val onTaskListener: OnTaskListener<TaskModel>
 ) : RecyclerView.Adapter<TaskViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
