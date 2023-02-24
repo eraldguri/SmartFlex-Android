@@ -23,7 +23,7 @@ class TaskViewHolder(
         }
 
         binding.btnEdit.setOnClickListener {
-            onTaskListener.onEdit(item)
+            onTaskListener.onEdit(adapterPosition, item)
         }
 
         binding.btnDelete.setOnClickListener {

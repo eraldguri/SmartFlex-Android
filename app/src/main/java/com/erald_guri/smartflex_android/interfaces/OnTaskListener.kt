@@ -5,7 +5,7 @@ interface OnTaskListener<T> {
 
     fun onItemClick(task: T)
 
-    fun onEdit(task: T)
+    fun onEdit(position: Int, task: T)
 
     fun onDelete(position: Int, task: T)
 

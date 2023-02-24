@@ -1,10 +1,9 @@
 package com.erald_guri.smartflex_android.view_models
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.database.sqlite.SQLiteConstraintException
+import androidx.lifecycle.*
 import com.erald_guri.smartflex_android.data.model.CategoryModel
+import com.erald_guri.smartflex_android.data.model.ResponseModel
 import com.erald_guri.smartflex_android.data.repository.CategoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,10 +14,10 @@ import javax.inject.Inject
 class CategoryViewModel @Inject constructor(private val categoryRepository: CategoryRepository) : ViewModel() {
 
     private var _categories = MutableLiveData<List<CategoryModel>>()
-    val categories: LiveData<List<CategoryModel>> = _categories
+    val categories: LiveData<List<CategoryModel>> = _categories.distinctUntilChanged()
 
-    private var _success = MutableLiveData<Boolean>()
-    val success: LiveData<Boolean> = _success
+    private var _success = MutableLiveData<ResponseModel>()
+    val success: LiveData<ResponseModel> = _success
 
     fun selectedAll(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -34,10 +33,24 @@ class CategoryViewModel @Inject constructor(private val categoryRepository: Cate
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 categoryRepository.insertCategory(category)
-                _success.postValue(true)
+                _success.postValue(ResponseModel(false, "${category.title} added successfully"))
             } catch (e: Exception) {
-                _success.postValue(false)
-                e.printStackTrace()
+                if (e is SQLiteConstraintException) {
+                    _success.postValue(ResponseModel(true, "${category.title} already exists"))
+                } else {
+                    _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))
+                }
+            }
+        }
+    }
+
+    fun updateCategory(category: CategoryModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                categoryRepository.updateCategory(category)
+                _success.postValue(ResponseModel(false, "${category.title} updated successfully"))
+            } catch (e: Exception) {
+                _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))
             }
         }
     }
@@ -46,9 +59,9 @@ class CategoryViewModel @Inject constructor(private val categoryRepository: Cate
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 categoryRepository.deleteCategory(category)
-                _success.postValue(true)
+                _success.postValue(ResponseModel(false, "${category.title} deleted successfully"))
             } catch (e: Exception) {
-                _success.postValue(false)
+                _success.postValue(ResponseModel(true, "An error occurred"))
                 e.printStackTrace()
             }
         }

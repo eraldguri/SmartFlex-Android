@@ -16,7 +16,7 @@ class CategoryViewHolder(
             tvDescription.text = item.description
 
             root.setOnClickListener { taskListener.onItemClick(item) }
-            btnEdit.setOnClickListener { taskListener.onItemClick(item) }
+            btnEdit.setOnClickListener { taskListener.onEdit(adapterPosition, item) }
             btnDelete.setOnClickListener { taskListener.onDelete(adapterPosition, item) }
         }
     }

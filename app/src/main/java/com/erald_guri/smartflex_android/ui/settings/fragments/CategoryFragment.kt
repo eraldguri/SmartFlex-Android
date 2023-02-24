@@ -2,6 +2,7 @@ package com.erald_guri.smartflex_android.ui.settings.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erald_guri.smartflex_android.adapters.CategoryAdapter
@@ -23,24 +24,41 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     private val viewModel by viewModels<CategoryViewModel>()
 
     lateinit var categoryAdapter: CategoryAdapter
+    private var categories = ArrayList<CategoryModel>()
+
+    private var isEditMode: Boolean = false
+    private var selectedCategory: CategoryModel? = null
+    private var selectedItemPosition: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.constraintView.visibility = View.GONE
+        binding.includeNotFound.root.visibility = View.GONE
 
         observe()
 
         binding.btnAddCategory.setOnClickListener {
             bottomSheetDialog()
         }
+
+        binding.includeNotFound.btnAdd.setOnClickListener { bottomSheetDialog() }
     }
 
     private fun observe() {
         viewModel.selectedAll()
         viewModel.categories.observe(viewLifecycleOwner) {
-            categoryAdapter = CategoryAdapter(it.toMutableList(), onTaskListener)
-            binding.includeRecycler.recycler.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = categoryAdapter
+            categories.clear()
+            categories.addAll(it)
+            categoryAdapter = CategoryAdapter(categories, onTaskListener)
+            if (it.isEmpty()) {
+                binding.includeNotFound.root.visibility = View.VISIBLE
+            } else {
+                binding.constraintView.visibility = View.VISIBLE
+                binding.includeRecycler.recycler.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    adapter = categoryAdapter
+                }
             }
         }
     }
@@ -50,17 +68,24 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
 
         }
 
-        override fun onEdit(task: CategoryModel) {
-
+        override fun onEdit(position: Int, task: CategoryModel) {
+            isEditMode = true
+            selectedCategory = task
+            selectedItemPosition = position
+            bottomSheetDialog()
         }
 
         override fun onDelete(position: Int, task: CategoryModel) {
             viewModel.deleteCategory(task)
             viewModel.success.observe(viewLifecycleOwner) {
-                if (it) {
+                if (!it.error) {
                     categoryAdapter.removeCategory(task)
+                    if (categoryAdapter.itemCount == 0) {
+                        binding.constraintView.visibility = View.GONE
+                        binding.includeNotFound.root.visibility = View.VISIBLE
+                    }
                 } else {
-                    Snackbar.make(binding.root, "An error occurred", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, it.message, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
@@ -72,8 +97,21 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         val bottomSheetBinding = DialogCategoryBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(bottomSheetBinding.root)
 
+        if (isEditMode) {
+            bottomSheetBinding.btnAdd.text = "Edit"
+
+            bottomSheetBinding.edTitle.setText(selectedCategory?.title)
+            bottomSheetBinding.edDescription.setText(selectedCategory?.description)
+        }
+
         bottomSheetBinding.btnAdd.setOnClickListener {
-            insertCategory(bottomSheetBinding, bottomSheetDialog)
+            if (isEditMode) {
+                val editedCategory = CategoryModel(bottomSheetBinding.edTitle.text.toString(), bottomSheetBinding.edDescription.text.toString())
+                editedCategory.id = selectedCategory?.id
+                editCategory(editedCategory, bottomSheetDialog)
+            } else {
+                insertCategory(bottomSheetBinding, bottomSheetDialog)
+            }
         }
 
         bottomSheetBinding.btnCancel.setOnClickListener {
@@ -83,15 +121,32 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         bottomSheetDialog.show()
     }
 
+    private fun editCategory(editedCategory: CategoryModel, dialog: BottomSheetDialog) {
+        viewModel.updateCategory(editedCategory)
+        viewModel.success.observe(viewLifecycleOwner) {
+            if (!it.error) {
+                categoryAdapter.updateCategory(selectedItemPosition, editedCategory)
+                dialog.dismiss()
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun insertCategory(bottomSheetBinding: DialogCategoryBinding, dialog: BottomSheetDialog) {
         val categoryModel = CategoryModel(bottomSheetBinding.edTitle.text.toString(), bottomSheetBinding.edDescription.text.toString())
         viewModel.insertCategory(categoryModel)
         viewModel.success.observe(viewLifecycleOwner) {
-            if (it) {
+            if (!it.error) {
                 categoryAdapter.addCategory(categoryModel)
+                if (categoryAdapter.itemCount > 0) {
+                    binding.constraintView.visibility = View.VISIBLE
+                    binding.includeNotFound.root.visibility = View.GONE
+                }
                 dialog.dismiss()
             } else {
-                Snackbar.make(binding.root, "An error occurred. Please try again!", Snackbar.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         }
     }

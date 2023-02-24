@@ -9,7 +9,7 @@ import com.erald_guri.smartflex_android.holders.CategoryViewHolder
 import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 
 class CategoryAdapter(
-    private val categories: MutableList<CategoryModel>,
+    private val categories: ArrayList<CategoryModel>,
     private val taskListener: OnTaskListener<CategoryModel>
 ) : RecyclerView.Adapter<CategoryViewHolder>() {
 
@@ -26,9 +26,20 @@ class CategoryAdapter(
 
     override fun getItemCount(): Int = categories.size
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     fun addCategory(category: CategoryModel) {
-        categories.add(category)
-        notifyItemInserted(categories.size)
+        if (!categories.contains(category)) {
+            categories.add(category)
+            notifyDataSetChanged()
+        }
+    }
+
+    fun updateCategory(position: Int, category: CategoryModel) {
+        categories[position].title = category.title
+        categories[position].description = category.description
         notifyDataSetChanged()
     }
 

@@ -1,9 +1,6 @@
 package com.erald_guri.smartflex_android.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.erald_guri.smartflex_android.data.model.CategoryModel
 
 @Dao
@@ -14,6 +11,9 @@ interface CategoryDao {
 
     @Insert
     suspend fun insertCategory(category: CategoryModel)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateCategory(category: CategoryModel)
 
     @Delete
     suspend fun deleteCategory(category: CategoryModel)
