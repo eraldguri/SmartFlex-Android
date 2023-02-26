@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingBottom="@dimen/list_item_spacing_half"
-    android:background="@drawable/bottom_sheet_rounded"
-    tools:context=".dialogs.CategoryDialogFragment">
+    android:background="@drawable/bottom_sheet_rounded">
 
     <EditText
         android:id="@+id/ed_title"

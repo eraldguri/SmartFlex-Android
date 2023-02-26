@@ -50,7 +50,7 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(
             Snackbar.make(binding.root, "Item clicked", Snackbar.LENGTH_SHORT).show()
         }
 
-        override fun onEdit(task: TaskModel) {
+        override fun onEdit(position: Int, task: TaskModel) {
             Snackbar.make(binding.root, "Item Edit", Snackbar.LENGTH_SHORT).show()
         }
 

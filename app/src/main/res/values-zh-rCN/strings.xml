@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartFlex-Android</string>
+    <string name="menu_tasks">任务</string>
+    <string name="task_title">任务名称</string>
+    <string name="category">类别</string>
+    <string name="priority">优先事项</string>
+    <string name="create_task">创建任务</string>
+    <string name="menu_settings">设置</string>
+    <string name="add_new_category">添加新类别</string>
+    <string name="cancel">取消</string>
+    <string name="add">添加</string>
+    <string name="add_category">添加类别</string>
+    <string name="change_language">改变语言</string>
+    <string name="action_settings">设置</string>
+    <string name="menu_home">家</string>
+    <string name="menu_quotes">引号</string>
+</resources>
