@@ -1,5 +1,6 @@
 package com.erald_guri.smartflex_android.ui.tasks
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -9,9 +10,12 @@ import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.TaskModel
 import com.erald_guri.smartflex_android.databinding.FragmentNewTaskBinding
 import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
+import com.erald_guri.smartflex_android.permissions.Permission
+import com.erald_guri.smartflex_android.permissions.PermissionManager
 import com.erald_guri.smartflex_android.utils.isEmpty
 import com.erald_guri.smartflex_android.utils.validate
 import com.erald_guri.smartflex_android.view_models.TasksViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +36,8 @@ class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
     private var selectedPriority: String = ""
     private var starts: String = ""
     private var ends: String = ""
+
+    private val permissionManager = PermissionManager.form(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +69,18 @@ class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
                     s.isEmpty(binding.edTitle)
                 }
             }
+        }
+
+        binding.tvAttachment.setOnClickListener {
+            permissionManager.request(Permission.Storage)
+                .rationale("Smartflex needs storage permissions to work properly")
+                .checkPermission { granted ->
+                    if (granted) {
+                        Snackbar.make(binding.root, "Permissions granted", Snackbar.LENGTH_SHORT).show()
+                    } else {
+                        Snackbar.make(binding.root, "Permissions denied", Snackbar.LENGTH_SHORT).show()
+                    }
+                }
         }
 
     }
