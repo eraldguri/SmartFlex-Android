@@ -3,21 +3,44 @@ package com.erald_guri.smartflex_android.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.erald_guri.smartflex_android.databinding.LayoutNoteToolsBinding
-import com.erald_guri.smartflex_android.holders.NoteToolsViewHolder
+import com.erald_guri.smartflex_android.data.model.NoteModel
+import com.erald_guri.smartflex_android.databinding.LayoutNoteItemBinding
+import com.erald_guri.smartflex_android.holders.NoteViewHolder
+import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 
-class NoteAdapter(private val items: ArrayList<Int>) : RecyclerView.Adapter<NoteToolsViewHolder>() {
+class NoteAdapter(
+    private val notes: ArrayList<NoteModel>,
+    private val taskListener: OnTaskListener<NoteModel>
+) : RecyclerView.Adapter<NoteViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteToolsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = LayoutNoteToolsBinding.inflate(inflater, parent, false)
-        return NoteToolsViewHolder(binding)
+        val binding = LayoutNoteItemBinding.inflate(inflater, parent, false)
+        return NoteViewHolder(binding, taskListener)
     }
 
-    override fun onBindViewHolder(holder: NoteToolsViewHolder, position: Int) {
-        val item = items[position]
-        holder.onBind(item)
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+        val note = notes[position]
+        holder.onBind(note)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = notes.size
+
+    fun addNote(note: NoteModel) {
+        if (!notes.contains(note)) {
+            notes.add(note)
+            notifyDataSetChanged()
+        }
+    }
+
+    fun updateNote(position: Int, note: NoteModel) {
+        notes[position].title = note.title
+        notes[position].description = note.description
+        notifyDataSetChanged()
+    }
+
+    fun removeNote(note: NoteModel) {
+        notes.remove(note)
+        notifyDataSetChanged()
+    }
 }
