@@ -16,4 +16,8 @@
     <string name="menu_home">家</string>
     <string name="menu_quotes">引号</string>
     <string name="dialog_permission_title">Permissions required</string>
+    <string name="menu_notes">Notes</string>
+    <string name="create_note">Create Note</string>
+    <string name="note_here">Note here</string>
+    <string name="font">Font</string>
 </resources>
