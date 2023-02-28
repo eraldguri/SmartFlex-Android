@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dialog_permission_title">Permissions required</string>
+    <string name="menu_notes">Notes</string>
+    <string name="create_note">Create Note</string>
+    <string name="note_here">Note here</string>
 </resources>

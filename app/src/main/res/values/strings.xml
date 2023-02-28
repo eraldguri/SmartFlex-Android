@@ -24,4 +24,7 @@
     <string name="add_category">Add Category</string>
     <string name="change_language">Change language</string>
     <string name="dialog_permission_title">Permissions required</string>
+    <string name="menu_notes">Notes</string>
+    <string name="create_note">Create Note</string>
+    <string name="note_here">Note here</string>
 </resources>

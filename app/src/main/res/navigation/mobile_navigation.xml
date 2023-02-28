@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_settings">
+    app:startDestination="@+id/nav_notes">
 
     <fragment
         android:id="@+id/nav_home"
@@ -27,10 +27,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.erald_guri.smartflex_android.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_notes"
+        android:name="com.erald_guri.smartflex_android.ui.notes.NotesFragment"
+        android:label="@string/menu_notes"
+        tools:layout="@layout/fragment_notes" />
     <fragment
         android:id="@+id/nav_new_task"
         android:name="com.erald_guri.smartflex_android.ui.tasks.NewTasksFragment"
