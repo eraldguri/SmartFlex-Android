@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/amaranth</item>
+        <item>@font/averia_gruesa_libre</item>
+        <item>@font/baloo_tamma</item>
+        <item>@font/bungee</item>
         <item>@font/lato</item>
         <item>@font/lato_bold</item>
+        <item>@font/lato_bold_italic</item>
+        <item>@font/lemon</item>
     </array>
 </resources>

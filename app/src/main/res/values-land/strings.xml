@@ -15,4 +15,5 @@
     <string name="menu_notes">Notes</string>
     <string name="create_note">Create Note</string>
     <string name="note_here">Note here</string>
+    <string name="font">Font</string>
 </resources>

@@ -11,3 +11,5 @@ fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String 
 fun getCurrentDateTime(): Date {
     return Calendar.getInstance().time
 }
+
+const val DATE_TIME_FORMAT_GENERAL = "yyyy/MM/dd HH:mm"
