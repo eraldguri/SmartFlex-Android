@@ -14,4 +14,6 @@
     <color name="blue">#e2edfe</color>
     <color name="purple">#A4B6D1</color>
     <color name="green">#e2ffee</color>
+
+    <color name="white_200">#fefeff</color>
 </resources>

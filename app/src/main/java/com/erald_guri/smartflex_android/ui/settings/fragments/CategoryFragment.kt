@@ -39,6 +39,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         observe()
 
         binding.btnAddCategory.setOnClickListener {
+            isEditMode = false
             bottomSheetDialog()
         }
 
