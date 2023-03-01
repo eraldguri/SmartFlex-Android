@@ -18,7 +18,10 @@ data class QuotesModel(
     var subtitle: String,
 
     @SerializedName("contents")
-    var contents: ArrayList<QuoteContent>
+    var contents: ArrayList<QuoteContent>,
+
+    @SerializedName("color")
+    var color: String
 )
 
 data class QuoteContent(
