@@ -2,34 +2,148 @@
   "quotes": [
     {
       "id": 1,
-      "title": "Chinese Idioms",
-      "description": "成语(chéngyǔ)",
-      "color": "#feebe9",
-      "items": [
+      "title": "The average person checks their phone 80 times ad day and spends nearly 6 hours on the screen.",
+      "subtitle": "Here are 8 simple steps, your smartphone addiction can be fixed for good.",
+      "contents": [
         {
-          "id": 1,
-          "title": "",
-          "color": ""
+          "no": 1,
+          "title": "Screen Time",
+          "descriptions": [
+            "First, let's assess the issue.",
+            "Go to the settings on your phone, check your screen time, and note down the number and date.",
+            "If you're like most people that number is likely to be 5 to 6 hours.",
+            "This might terrify you, but don't worry",
+            "We'll take care of that."
+          ]
+        },
+        {
+          "no": 2,
+          "title": "Digital Minimalism",
+          "descriptions": [
+            "Look at your home page and ask yourself: Do I need this app?",
+            "Commit to deleting at least one application every day.",
+            "By the next week, you won't recognize your phone."
+          ]
+        },
+        {
+          "no": 3,
+          "title": "Home Screen",
+          "descriptions": [
+            "Your home screen has to be maintained just like your house does.",
+            "Let's optimise it. Sort your applications by categories.",
+            "For example: Health, Finance, Business, Knowledge, Scheduling, Organization",
+            "This is a great way to add order to chaos"
+          ]
+        },
+        {
+          "no": 4,
+          "title": "Notifications",
+          "descriptions": [
+            "Does the sound of a notification cause you to check your phone similarly?",
+            "Let's fix that",
+            "Turn off all social media and news app notifications.",
+            "They're designed to divert your attention and diminish your focus.",
+            "Create a scheduled Summary list to take things a step further.",
+            "This sends notifications from specified applications at the allocated time."
+          ]
+        },
+        {
+          "no": 5,
+          "title": "Application Blockers",
+          "descriptions": [
+            "Check your screen time once again. Note the apps that you use the most.",
+            "Then enter App Limits and set a timer for just 30 minutes.",
+            "Download tools like Forest and Flora to make this more effective.",
+            "These will break the feedback loop of aimlessly scrolling across applications."
+          ]
+        },
+        {
+          "no": 6,
+          "title": "Black and White",
+          "descriptions": [
+            "You've probably noticed that majority of applications use vibrant colours.",
+            "The reason behind it is simple.",
+            "These colours are placed to release dopamine, capture attention and ultimately keep you hooked.",
+            "Let's change that."
+          ]
+        },
+        {
+          "no": 7,
+          "title": "Limitations",
+          "descriptions": [
+            "set some downtime with this simple rule:",
+            "No screens one hour before bed and one hour after waking up.",
+            "Take this time to : Read, Journal, Meditate",
+            "Keep your phone upside down and set up some screen-free spaces.",
+            "For instance, no phones allowed in the bedroom."
+          ]
+        },
+        {
+          "no": 8,
+          "title": "Unplug",
+          "descriptions": [
+            "Lastly, if your phone use is stressing you out, it might be time to unplug.",
+            "A simple way to unplug: The 30-day social media detox",
+            "Take these applications off your phone",
+            "Give yourself quality alternatives by going on more walks, listening to podcasts, and hanging out with friends.",
+            "Take this time to nurture real life experiences",
+            "You'll be unrecognizable in 30 days."
+          ]
         }
       ]
     },
     {
       "id": 2,
-      "title": "Motivational Quotes",
-      "description": "Motivate yourself",
-      "color": "#e2edfe"
-    },
-    {
-      "id": 3,
-      "title": "Love Quotes",
-      "description": "Love yourself first",
-      "color": "#A4B6D1"
-    },
-    {
-      "id": 4,
-      "title": "Dark Quotes",
-      "description": "Embrace the darkness",
-      "color": "#e2ffee"
+      "title": "How to hack your 4 major hormones to 10x your productivity, happiness and focus:",
+      "subtitle": "",
+      "contents": [
+        {
+          "no": 1,
+          "title": "Serotonin",
+          "descriptions": [
+            "Serotonin regulates your sleep, your mood and your happiness as well as a few other regulatory functions.",
+            "So, if your sleep is messed up and you're always feeling down, you need to boost your serotonin:",
+            "Consume more tryptophan (an amino acid) -eggs, cheese, salmon or supplements",
+            "Exercise regularly (preferably daily, even if it's just a walk)",
+            "Spend more time in the sun (or use a light therapy box)",
+            "Meditate"
+          ]
+        },
+        {
+          "no": 2,
+          "title": "Dopamine",
+          "descriptions": [
+            "Dopamine is the pursuit hormone, it makes you want to pursue things that give you pleasure.",
+            "Too much cheap dopamine (unearned) can ruin your focus, motivation and drive. To hack your dopamine:",
+            "Set daily achievable goals",
+            "Cross of tasks on your to-do list",
+            "Reduce your social media usage",
+            "Get 11 minutes of cold exposure/week (11 minutes in an ice bath or cold shower at 45-60F)"
+          ]
+        },
+        {
+          "no": 3,
+          "title": "Endorphins",
+          "descriptions": [
+            "Endorphins are the painkiller hormone, they relieve pain, and stress and boost your mood.",
+            "Low endorphin levels can cause mood swings, depression and anxiety. To hack your endorphins:",
+            "Exercise daily (mix of resistance training and walking)",
+            "Eat dark chocolate (cocoa increases endorphins)",
+            "Have a good laugh"
+          ]
+        },
+        {
+          "no": 4,
+          "title": "Oxytocin",
+          "descriptions": [
+            "Oxytocin regulates emotional responses and social behaviours.",
+            "Low oxytocin can cause poor communication, irritability and a feeling of loneliness. To hack your oxytocin:",
+            "Spend time with loved ones",
+            "Give someone a hug",
+            "Spend time with pets"
+          ]
+        }
+      ]
     }
   ]
 }

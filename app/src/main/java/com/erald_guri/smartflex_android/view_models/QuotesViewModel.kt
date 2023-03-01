@@ -4,37 +4,28 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.erald_guri.smartflex_android.data.model.CardModel
+import com.erald_guri.smartflex_android.data.model.Quote
+import com.erald_guri.smartflex_android.data.model.QuotesModel
 import com.erald_guri.smartflex_android.utils.JsonUtils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
 class QuotesViewModel @Inject constructor(val app: Application) : AndroidViewModel(app) {
 
-    private var _quotes = MutableLiveData<ArrayList<CardModel>>()
-    val quotes: LiveData<ArrayList<CardModel>> = _quotes
+    private val _quotes = MutableLiveData<ArrayList<QuotesModel>>()
+    val quotes: LiveData<ArrayList<QuotesModel>> = _quotes
 
     fun getQuotes() {
         val json = JsonUtils.readJsonFromAsset(app.applicationContext, "quotes.json")
-        val jsonObject = JSONObject(json)
-        val jsonArray = jsonObject.getJSONArray("quotes")
+        val gson = Gson()
 
-        var itemCardModel: CardModel?
-        val items = ArrayList<CardModel>()
-        for (index in 0 until jsonArray.length()) {
-            val valueObject = jsonArray.getJSONObject(index)
+        val results: Quote = gson.fromJson(json, object : TypeToken<Quote?>() {}.type)
 
-            val id = valueObject.getInt("id")
-            val title = valueObject.getString("title")
-            val description = valueObject.getString("description")
-            val colorStr = valueObject.getString("color")
-            itemCardModel = CardModel(id, title, description, colorStr)
-            items.add(itemCardModel)
-        }
+        _quotes.postValue(results.quotes)
 
-        _quotes.postValue(items)
     }
 
 }
