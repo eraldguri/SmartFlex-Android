@@ -9,9 +9,11 @@ import com.erald_guri.smartflex_android.data.model.FontModel
 import com.erald_guri.smartflex_android.data.model.NoteModel
 import com.erald_guri.smartflex_android.data.model.ResponseModel
 import com.erald_guri.smartflex_android.data.repository.NoteRepository
+import com.erald_guri.smartflex_android.utils.JsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,6 +34,9 @@ class NoteViewModel @Inject constructor(
     private var _fontListSelector = MutableLiveData<ArrayList<FontModel>>()
     val fontListSelector: LiveData<ArrayList<FontModel>> = _fontListSelector
 
+    private var _colors = MutableLiveData<ArrayList<String>>()
+    val colors: LiveData<ArrayList<String>> = _colors
+
     fun setupNoteActions() {
         val icons = ArrayList<Int>()
         icons.add(R.drawable.ic_baseline_format_color_text_24)
@@ -45,6 +50,18 @@ class NoteViewModel @Inject constructor(
         icons.add(R.drawable.ic_baseline_format_list_numbered_24)
 
         _actionIcons.postValue(icons)
+    }
+
+    fun fetchColors() {
+        val colorArray = ArrayList<String>()
+        val json = JsonUtils.readJsonFromAsset(app.applicationContext, "color.json")
+        val jsonObject = JSONObject(json)
+        val jsonArray = jsonObject.getJSONArray("colors")
+        for (index in 0 until jsonArray.length()) {
+            colorArray.add(jsonArray.getString(index))
+        }
+
+        _colors.postValue(colorArray)
     }
 
     fun setupFontListSelector() {

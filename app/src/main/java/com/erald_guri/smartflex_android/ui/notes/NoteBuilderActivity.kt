@@ -7,14 +7,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.adapters.ColorSelectorAdapter
 import com.erald_guri.smartflex_android.adapters.FontSelectorAdapter
 import com.erald_guri.smartflex_android.adapters.NoteToolsAdapter
-import com.erald_guri.smartflex_android.data.model.FontModel
 import com.erald_guri.smartflex_android.data.model.NoteModel
 import com.erald_guri.smartflex_android.databinding.ActivityNoteBuilderBinding
 import com.erald_guri.smartflex_android.databinding.FontSelectionDialogBinding
@@ -150,21 +147,15 @@ class NoteBuilderActivity : AppCompatActivity() {
         val fontBinding = FontSelectionDialogBinding.inflate(layoutInflater)
         bottomFontDialog.setContentView(fontBinding.root)
 
-        //TODO: json
-        val colors = ArrayList<String>()
-        colors.add("#9d683c")
-        colors.add("#55dab8")
-        colors.add("#e5d2e0")
-        colors.add("#ffeaf9")
-        colors.add("#f3daff")
-        colors.add("#f1cbff")
-        colors.add("#009999")
-        val colorSelectorAdapter = ColorSelectorAdapter(colors)
-        val linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        fontBinding.includeRecyclerTextColors.recycler.apply {
-            layoutManager = linearLayoutManager
-            adapter = colorSelectorAdapter
+        viewModel.fetchColors()
+        viewModel.colors.observe(this) {
+            val colorSelectorAdapter = ColorSelectorAdapter(it)
+            val linearLayoutManager = LinearLayoutManager(this)
+            linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            fontBinding.includeRecyclerTextColors.recycler.apply {
+                layoutManager = linearLayoutManager
+                adapter = colorSelectorAdapter
+            }
         }
 
         viewModel.setupFontListSelector()
