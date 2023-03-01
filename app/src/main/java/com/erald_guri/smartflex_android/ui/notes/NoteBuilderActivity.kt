@@ -76,23 +76,15 @@ class NoteBuilderActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val icons = ArrayList<Int>()
-        icons.add(R.drawable.ic_baseline_format_color_text_24)
-        icons.add(R.drawable.ic_baseline_check_box_24)
-        icons.add(R.drawable.ic_baseline_mic_none_24)
-        icons.add(R.drawable.ic_baseline_create_24)
-        icons.add(R.drawable.ic_baseline_image_24)
-        icons.add(R.drawable.ic_baseline_emoji_emotions_24)
-        icons.add(R.drawable.ic_baseline_color_lens_24)
-        icons.add(R.drawable.ic_baseline_format_list_bulleted_24)
-        icons.add(R.drawable.ic_baseline_format_list_numbered_24)
-
-        val toolsAdapter = NoteToolsAdapter(icons, onItemClickListener)
-        val linearLayoutManager = LinearLayoutManager(applicationContext)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        binding!!.recycler.apply {
-            layoutManager = linearLayoutManager
-            adapter = toolsAdapter
+        viewModel.setupNoteActions()
+        viewModel.actionIcons.observe(this) {
+            val toolsAdapter = NoteToolsAdapter(it, onItemClickListener)
+            val linearLayoutManager = LinearLayoutManager(applicationContext)
+            linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            binding!!.recycler.apply {
+                layoutManager = linearLayoutManager
+                adapter = toolsAdapter
+            }
         }
     }
 
@@ -158,6 +150,7 @@ class NoteBuilderActivity : AppCompatActivity() {
         val fontBinding = FontSelectionDialogBinding.inflate(layoutInflater)
         bottomFontDialog.setContentView(fontBinding.root)
 
+        //TODO: json
         val colors = ArrayList<String>()
         colors.add("#9d683c")
         colors.add("#55dab8")
@@ -174,17 +167,13 @@ class NoteBuilderActivity : AppCompatActivity() {
             adapter = colorSelectorAdapter
         }
 
-        val fonts = ArrayList<FontModel>()
-        fonts.add(FontModel("Amaranth", ResourcesCompat.getFont(this, R.font.amaranth)))
-        fonts.add(FontModel("Averia Gruesa Libre", ResourcesCompat.getFont(this, R.font.averia_gruesa_libre)))
-        fonts.add(FontModel("Baloo Tamma", ResourcesCompat.getFont(this, R.font.baloo_tamma)))
-        fonts.add(FontModel("Bungee", ResourcesCompat.getFont(this, R.font.bungee)))
-        fonts.add(FontModel("Lemon", ResourcesCompat.getFont(this, R.font.lemon)))
-
-        val fontSelectionAdapter = FontSelectorAdapter(fonts)
-        fontBinding.includeRecyclerFonts.recycler.apply {
-            layoutManager = GridLayoutManager(applicationContext, 3)
-            adapter = fontSelectionAdapter
+        viewModel.setupFontListSelector()
+        viewModel.fontListSelector.observe(this) {
+            val fontSelectionAdapter = FontSelectorAdapter(it)
+            fontBinding.includeRecyclerFonts.recycler.apply {
+                layoutManager = GridLayoutManager(applicationContext, 3)
+                adapter = fontSelectionAdapter
+            }
         }
 
         bottomFontDialog.show()
