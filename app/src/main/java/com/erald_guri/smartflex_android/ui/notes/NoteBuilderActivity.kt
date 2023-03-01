@@ -1,10 +1,15 @@
 package com.erald_guri.smartflex_android.ui.notes
 
+import android.graphics.Typeface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
@@ -167,7 +172,35 @@ class NoteBuilderActivity : AppCompatActivity() {
             }
         }
 
+        buttonBold(fontBinding)
+        buttonItalics(fontBinding)
+        buttonUnderline(fontBinding)
+
         bottomFontDialog.show()
+    }
+
+    private fun buttonBold(fontBinding: FontSelectionDialogBinding) {
+        fontBinding.btnBold.setOnClickListener {
+            val spannableString: Spannable = SpannableStringBuilder(binding!!.edNote.text)
+            spannableString.setSpan(StyleSpan(Typeface.BOLD), binding!!.edNote.selectionStart, binding!!.edNote.selectionEnd, 0)
+            binding!!.edNote.setText(spannableString)
+        }
+    }
+
+    private fun buttonItalics(fontBinding: FontSelectionDialogBinding) {
+        fontBinding.btnItalic.setOnClickListener {
+            val spannableString: Spannable = SpannableStringBuilder(binding!!.edNote.text)
+            spannableString.setSpan(StyleSpan(Typeface.ITALIC), binding!!.edNote.selectionStart, binding!!.edNote.selectionEnd, 0)
+            binding!!.edNote.setText(spannableString)
+        }
+    }
+
+    private fun buttonUnderline(fontBinding: FontSelectionDialogBinding) {
+        fontBinding.btnUnderline.setOnClickListener {
+            val spannableString: Spannable = SpannableStringBuilder(binding!!.edNote.text)
+            spannableString.setSpan(UnderlineSpan(), binding!!.edNote.selectionStart, binding!!.edNote.selectionEnd, 0)
+            binding!!.edNote.setText(spannableString)
+        }
     }
 
     override fun onDestroy() {
