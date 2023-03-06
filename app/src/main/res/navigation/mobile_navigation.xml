@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_quotes">
+    app:startDestination="@+id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
@@ -11,15 +11,6 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/nav_quotes"
-        android:name="com.erald_guri.smartflex_android.ui.quotes.QuotesFragment"
-        android:label="@string/menu_quotes"
-        tools:layout="@layout/fragment_quotes" >
-        <action
-            android:id="@+id/action_nav_quotes_to_quoteViewFragment"
-            app:destination="@id/quoteViewFragment" />
-    </fragment>
     <fragment
         android:id="@+id/nav_tasks"
         android:name="com.erald_guri.smartflex_android.ui.tasks.TaskFragment"
@@ -54,14 +45,5 @@
         android:name="com.erald_guri.smartflex_android.ui.settings.fragments.CategoryFragment"
         android:label="@string/category"
         tools:layout="@layout/fragment_category" >
-    </fragment>
-    <fragment
-        android:id="@+id/quoteViewFragment"
-        android:name="com.erald_guri.smartflex_android.ui.quotes.QuoteViewFragment"
-        android:label="fragment_quote_view"
-        tools:layout="@layout/fragment_quote_view" >
-        <argument
-            android:name="position"
-            app:argType="integer" />
     </fragment>
 </navigation>
