@@ -88,7 +88,6 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
-        TODO("Not yet implemented")
     }
 
 }
