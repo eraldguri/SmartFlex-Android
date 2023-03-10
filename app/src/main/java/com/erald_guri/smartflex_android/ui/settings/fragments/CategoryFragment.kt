@@ -13,6 +13,7 @@ import com.erald_guri.smartflex_android.databinding.FragmentCategoryBinding
 import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 import com.erald_guri.smartflex_android.view_models.CategoryViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +45,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         }
 
         binding.includeNotFound.btnAdd.setOnClickListener { bottomSheetDialog() }
+    }
+
+    override fun onFabButton(fabButton: FloatingActionButton?) {
+
     }
 
     private fun observe() {

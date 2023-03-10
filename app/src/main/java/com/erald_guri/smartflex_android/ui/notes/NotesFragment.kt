@@ -13,6 +13,7 @@ import com.erald_guri.smartflex_android.data.model.NoteModel
 import com.erald_guri.smartflex_android.databinding.FragmentNotesBinding
 import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 import com.erald_guri.smartflex_android.view_models.NoteViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -84,6 +85,10 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(
     override fun onResume() {
         super.onResume()
         observeNotes()
+    }
+
+    override fun onFabButton(fabButton: FloatingActionButton?) {
+        TODO("Not yet implemented")
     }
 
 }

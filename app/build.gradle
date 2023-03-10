@@ -69,6 +69,10 @@ dependencies {
     // multithreading and concurrency
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
+    runtimeOnly 'io.reactivex.rxjava2:rxkotlin:2.0.0'
+
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
     implementation 'com.google.code.gson:gson:2.10.1'
 

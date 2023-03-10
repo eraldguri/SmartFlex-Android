@@ -18,6 +18,7 @@ import com.erald_guri.smartflex_android.utils.isEmpty
 import com.erald_guri.smartflex_android.utils.validate
 import com.erald_guri.smartflex_android.view_models.CategoryViewModel
 import com.erald_guri.smartflex_android.view_models.TasksViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -75,6 +76,10 @@ class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
                 }
             }
         }
+
+    }
+
+    override fun onFabButton(fabButton: FloatingActionButton?) {
 
     }
 

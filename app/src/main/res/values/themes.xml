@@ -53,6 +53,12 @@
         <item name="android:textColor">#595e69</item>
     </style>
 
+    <style name="TextViewFieldStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/robotomedium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
     <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

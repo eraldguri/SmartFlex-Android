@@ -16,6 +16,7 @@ import com.erald_guri.smartflex_android.databinding.LayoutLanguageDialogBinding
 import com.erald_guri.smartflex_android.interfaces.OnItemClickListener
 import com.erald_guri.smartflex_android.view_models.SettingsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +45,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
             layoutManager = GridLayoutManager(requireContext(), 4)
             adapter = settingsAdapter
         }
+    }
+
+    override fun onFabButton(fabButton: FloatingActionButton?) {
+
     }
 
     private val onItemClickListener = object : OnItemClickListener<SettingsModel> {

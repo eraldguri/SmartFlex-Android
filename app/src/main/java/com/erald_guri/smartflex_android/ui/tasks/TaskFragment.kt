@@ -11,6 +11,7 @@ import com.erald_guri.smartflex_android.data.model.TaskModel
 import com.erald_guri.smartflex_android.databinding.FragmentTaskBinding
 import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 import com.erald_guri.smartflex_android.view_models.TasksViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,10 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(
             val action = TaskFragmentDirections.actionNavTasksToNavNewTask()
             findNavController().navigate(action)
         }
+    }
+
+    override fun onFabButton(fabButton: FloatingActionButton?) {
+
     }
 
     private fun observeTasks() {
