@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.erald_guri.smartflex_android.data.database.FlexDatabase
 import com.erald_guri.smartflex_android.data.database.dao.CategoryDao
+import com.erald_guri.smartflex_android.data.database.dao.ContactDao
 import com.erald_guri.smartflex_android.data.database.dao.NoteDao
 import com.erald_guri.smartflex_android.data.database.dao.TaskDao
 import dagger.Module
@@ -35,5 +36,9 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideNoteDao(database: FlexDatabase): NoteDao = database.noteDao()
+
+    @Provides
+    @Singleton
+    fun providesContactDao(database: FlexDatabase): ContactDao = database.contactDao()
 
 }

@@ -33,10 +33,6 @@ abstract class BaseFragment<VB: ViewBinding>(
         return binding.root
     }
 
-    override fun onFabButton(fabButton: FloatingActionButton?) {
-
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
