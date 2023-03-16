@@ -3,10 +3,7 @@ package com.erald_guri.smartflex_android.di
 import android.content.Context
 import androidx.room.Room
 import com.erald_guri.smartflex_android.data.database.FlexDatabase
-import com.erald_guri.smartflex_android.data.database.dao.CategoryDao
-import com.erald_guri.smartflex_android.data.database.dao.ContactDao
-import com.erald_guri.smartflex_android.data.database.dao.NoteDao
-import com.erald_guri.smartflex_android.data.database.dao.TaskDao
+import com.erald_guri.smartflex_android.data.database.dao.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,5 +37,9 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun providesContactDao(database: FlexDatabase): ContactDao = database.contactDao()
+
+    @Provides
+    @Singleton
+    fun providesAccountDao(database: FlexDatabase): AccountDao = database.accountDao()
 
 }

@@ -52,4 +52,12 @@
     <string name="other_zip_code">Other zip code</string>
     <string name="description">Description</string>
     <string name="add_contact">Add Contact</string>
+    <string name="accounts">Accounts</string>
+    <string name="account_name">Account Name</string>
+    <string name="website">Website</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="create_account">Create Account</string>
+    <string name="account_site">Account Site</string>
+    <string name="fax">Fax</string>
+    <string name="account_type">Account Type</string>
 </resources>
