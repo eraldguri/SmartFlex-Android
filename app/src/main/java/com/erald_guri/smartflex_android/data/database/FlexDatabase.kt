@@ -2,23 +2,18 @@ package com.erald_guri.smartflex_android.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.erald_guri.smartflex_android.data.database.dao.CategoryDao
-import com.erald_guri.smartflex_android.data.database.dao.ContactDao
-import com.erald_guri.smartflex_android.data.database.dao.NoteDao
-import com.erald_guri.smartflex_android.data.database.dao.TaskDao
-import com.erald_guri.smartflex_android.data.model.CategoryModel
-import com.erald_guri.smartflex_android.data.model.ContactModel
-import com.erald_guri.smartflex_android.data.model.NoteModel
-import com.erald_guri.smartflex_android.data.model.TaskModel
+import com.erald_guri.smartflex_android.data.database.dao.*
+import com.erald_guri.smartflex_android.data.model.*
 
 @Database(
     entities = [
         TaskModel::class,
         CategoryModel::class,
         NoteModel::class,
-        ContactModel::class
+        ContactModel::class,
+        AccountModel::class
     ],
-    version = 6
+    version = 7
 )
 abstract class FlexDatabase : RoomDatabase() {
 
@@ -29,5 +24,7 @@ abstract class FlexDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 
     abstract fun contactDao(): ContactDao
+
+    abstract fun accountDao(): AccountDao
 
 }

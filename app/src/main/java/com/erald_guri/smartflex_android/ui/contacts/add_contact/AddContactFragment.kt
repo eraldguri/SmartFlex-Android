@@ -43,6 +43,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
             btnCamera.setOnClickListener {
                 dialog.dismiss()
                 cameraPermission()
+                storagePermission()
             }
             btnGallery.setOnClickListener { storagePermission() }
         }
@@ -58,8 +59,12 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         return EasyPermissions.hasPermissions(requireContext(), Manifest.permission.CAMERA)
     }
 
-    private fun hasStoragePermission(): Boolean {
+    private fun hasReadExternalStoragePermission(): Boolean {
         return EasyPermissions.hasPermissions(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
+    private fun hasWriteExternalStoragePermission(): Boolean {
+        return EasyPermissions.hasPermissions(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     private fun cameraPermission() {
@@ -76,13 +81,18 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
     }
 
     private fun storagePermission() {
-        if (hasStoragePermission()) {
+        if (hasReadExternalStoragePermission() && hasWriteExternalStoragePermission()) {
             //TODO
         } else {
             EasyPermissions.requestPermissions(requireActivity(),
                 "SmartFlex needs to access internal storage",
                 READ_EXTERNAL_STORAGE_REQUEST,
                 Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            EasyPermissions.requestPermissions(requireActivity(),
+                "SmartFlex needs to access internal storage",
+                WRITE_EXTERNAL_STORAGE_REQUEST,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         }
     }

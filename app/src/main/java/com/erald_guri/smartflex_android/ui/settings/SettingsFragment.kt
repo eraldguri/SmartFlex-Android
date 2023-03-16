@@ -1,12 +1,11 @@
 package com.erald_guri.smartflex_android.ui.settings
 
-import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.erald_guri.smartflex_android.MainActivity
 import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.adapters.SettingsAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
@@ -33,7 +32,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
         val categories = SettingsModel("Category", R.drawable.ic_baseline_category_24, "#f8bf7c")
         val tags = SettingsModel("Tags", R.drawable.ic_baseline_tag_24, "#6589e5")
         val language = SettingsModel("Language", R.drawable.ic_baseline_language_24, "#e56470")
-        val contacts = SettingsModel("Contacts", R.drawable.ic_baseline_contacts_24, "#3f5061")
+        val contacts = SettingsModel("Accounts", R.drawable.ic_baseline_manage_accounts_24, "#3f5061")
 
         settings.add(categories)
         settings.add(tags)
@@ -62,6 +61,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
                     //TODO: tags
                 }
                 2 -> { languageDialog() }
+                3 -> {
+//                    val action = SettingsFragmentDirections.actionNavSettingsToAccountsFragment()
+//                    findNavController().navigate(action)
+                }
             }
         }
 
