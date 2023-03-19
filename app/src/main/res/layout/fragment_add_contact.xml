@@ -60,6 +60,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/contact_information"
             android:textSize="16sp"
+            android:textColor="@color/purple"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
 
@@ -400,6 +401,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/address_information"
             android:textSize="16sp"
+            android:textColor="@color/purple"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ed_secondary_email" />
 
@@ -667,6 +669,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/description_information"
             android:textSize="16sp"
+            android:textColor="@color/purple"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ed_other_state" />
 

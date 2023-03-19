@@ -6,6 +6,8 @@ import javax.inject.Inject
 
 class ContactRepository @Inject constructor(private val contactDao: ContactDao) {
 
+    suspend fun selectAll() = contactDao.selectAll()
+
     suspend fun insertContact(contact: ContactModel) = contactDao.insertContact(contact)
 
 }
