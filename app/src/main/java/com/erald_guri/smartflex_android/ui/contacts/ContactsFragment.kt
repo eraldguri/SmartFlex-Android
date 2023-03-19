@@ -35,7 +35,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
     private fun observeContacts() {
         viewModel.fetchContacts()
         viewModel.contacts.observe(viewLifecycleOwner) {
-            contactAdapter = ContactListAdapter(it)
+            contactAdapter = ContactListAdapter(requireContext(), it)
             binding.includeRecycler.recycler.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = contactAdapter

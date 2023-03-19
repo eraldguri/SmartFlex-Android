@@ -1,14 +1,20 @@
 package com.erald_guri.smartflex_android.ui.contacts.add_contact
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.DialogPhotoChoserBinding
@@ -18,10 +24,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import java.io.File
+
 
 const val CAMERA_PERMISSION_REQUEST = 100
 const val READ_EXTERNAL_STORAGE_REQUEST = 101
-const val WRITE_EXTERNAL_STORAGE_REQUEST = 101
+const val WRITE_EXTERNAL_STORAGE_REQUEST = 102
 
 @AndroidEntryPoint
 class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
@@ -29,6 +37,8 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 ), EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private val viewModel by viewModels<ContactViewModel>()
+    private lateinit var photoDialog: AlertDialog
+    private lateinit var imagePath: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,18 +53,18 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         val alertDialog = AlertDialog.Builder(requireContext())
         val photoChooserBinding = DialogPhotoChoserBinding.inflate(layoutInflater)
         alertDialog.setView(photoChooserBinding.root)
-        val dialog = alertDialog.create()
+        photoDialog = alertDialog.create()
 
         photoChooserBinding.apply {
             btnCamera.setOnClickListener {
-                dialog.dismiss()
+                photoDialog.dismiss()
                 cameraPermission()
                 storagePermission()
             }
             btnGallery.setOnClickListener { storagePermission() }
         }
 
-        dialog.show()
+        photoDialog.show()
     }
 
     private fun createContact() {
@@ -82,12 +92,15 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
             val zipCode = edZip.text.toString()
             val otherZipCode = edOtherZip.text.toString()
             val description = edDescription.text.toString()
-            val photoPath = ""
+            var selectedFilePath = ""
+            selectedFilePath = imagePath.ifEmpty {
+                ""
+            }
             val contact = ContactModel(
                 firstName, lastName, email, title, accountName, vendorName, leadSource, dateOfBirth,
-                phone.toInt(), otherPhone.toInt(), mobile.toInt(), secondaryEmail, street, otherStreet,
+                phone, otherPhone, mobile, secondaryEmail, street, otherStreet,
                 city, otherCity, state, otherState, country, otherCountry, zipCode, otherZipCode,
-                description, photoPath
+                description, selectedFilePath
             )
             if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
                 viewModel.insertContact(contact)
@@ -134,7 +147,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 
     private fun storagePermission() {
         if (hasReadExternalStoragePermission() && hasWriteExternalStoragePermission()) {
-            //TODO
+            pickImageFromGallery()
         } else {
             EasyPermissions.requestPermissions(requireActivity(),
                 "SmartFlex needs to access internal storage",
@@ -147,6 +160,12 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         }
+    }
+
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        resultLauncher.launch(intent)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -171,6 +190,23 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                 if (hasCameraPermission()) "Yes" else "No",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Display selected image from gallery
+            val imageUri: Uri? = result.data?.data
+            Glide.with(requireContext())
+                .load(imageUri)
+                .override(500, 500)
+                .into(binding.imageView)
+
+            val imageFile = File(imageUri.toString())
+            imagePath = imageFile.absolutePath
+
+            photoDialog.dismiss()
+            binding.btnSelectPhoto.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_edit_24))
         }
     }
 
