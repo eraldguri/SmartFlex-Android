@@ -9,6 +9,7 @@ class ContactModel(
     var lastName: String,
     var email: String,
     var title: String,
+    var company: String,
     var accountName: String,
     var vendorName: String,
     var leadSource: String,

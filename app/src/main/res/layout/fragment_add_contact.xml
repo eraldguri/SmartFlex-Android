@@ -176,17 +176,43 @@
             app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
         <TextView
-            android:id="@+id/tv_account_name"
+            android:id="@+id/tv_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Account Name"
+            android:text="@string/company"
             style="@style/TextViewFieldStyle"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ed_title" />
+
+        <EditText
+            android:id="@+id/ed_company"
+            style="@style/EditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_company"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/tv_company" />
+
+        <TextView
+            android:id="@+id/tv_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/account_name"
+            style="@style/TextViewFieldStyle"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_company" />
 
         <EditText
             android:id="@+id/ed_account_name"
@@ -276,7 +302,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="date"
+            android:focusable="false"
             android:drawableEnd="@drawable/ic_baseline_calendar_month_24"
             app:layout_constraintBottom_toBottomOf="@+id/tv_birthday"
             app:layout_constraintEnd_toEndOf="parent"
@@ -699,6 +726,71 @@
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/tv_description" />
 
+        <TextView
+            android:id="@+id/tv_socials"
+            style="@style/TextViewMainStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/social_links"
+            android:textSize="16sp"
+            android:textColor="@color/purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_description" />
+
+        <TextView
+            android:id="@+id/tv_linkedin"
+            style="@style/TextViewFieldStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/linkedin"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_socials" />
+
+        <EditText
+            android:id="@+id/ed_linkedin"
+            style="@style/EditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_linkedin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/tv_linkedin" />
+
+        <TextView
+            android:id="@+id/tv_skype"
+            style="@style/TextViewFieldStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/skype"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_linkedin" />
+
+        <EditText
+            android:id="@+id/ed_skype"
+            style="@style/EditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_skype"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/tv_skype" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_create_contact"
             style="@style/MainButtonStyle"
@@ -712,7 +804,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_description" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_skype" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

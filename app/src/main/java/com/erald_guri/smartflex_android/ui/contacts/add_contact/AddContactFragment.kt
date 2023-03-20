@@ -2,9 +2,12 @@ package com.erald_guri.smartflex_android.ui.contacts.add_contact
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -21,11 +24,15 @@ import com.erald_guri.smartflex_android.databinding.DialogPhotoChoserBinding
 import com.erald_guri.smartflex_android.databinding.FragmentAddContactBinding
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
-
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.util.*
 
 const val CAMERA_PERMISSION_REQUEST = 100
 const val READ_EXTERNAL_STORAGE_REQUEST = 101
@@ -38,12 +45,14 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 
     private val viewModel by viewModels<ContactViewModel>()
     private lateinit var photoDialog: AlertDialog
-    private lateinit var imagePath: String
+    private var imagePath: String? = null
+    private lateinit var selectedDate: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            edBirthday.setOnClickListener { datePickerDialog() }
             btnSelectPhoto.setOnClickListener { photoChooserDialog() }
             btnCreateContact.setOnClickListener { createContact() }
         }
@@ -67,42 +76,62 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         photoDialog.show()
     }
 
+    private fun datePickerDialog() {
+        val now = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog.newInstance(
+            onDateSet,
+            now.get(Calendar.YEAR),
+            now.get(Calendar.MONTH),
+            now.get(Calendar.DAY_OF_MONTH)
+        )
+        childFragmentManager.let { datePickerDialog.show(it, "Datepickerdialog") };
+    }
+
+    private val onDateSet = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        selectedDate = "$dayOfMonth/$monthOfYear/$year"
+        binding.edBirthday.setText(selectedDate)
+    }
+
     private fun createContact() {
         binding.apply {
-            val firstName = edFirstName.text.toString()
-            val lastName = edLastName.text.toString()
-            val email = edEmail.text.toString()
-            val title = edTitle.text.toString()
-            val accountName = edAccountName.text.toString()
-            val vendorName = edVendorName.text.toString()
-            val leadSource = edLeadSource.text.toString()
-            val dateOfBirth = edBirthday.text.toString()
-            val phone = edPhone.text.toString()
-            val otherPhone = edOtherPhone.text.toString()
-            val mobile = edMobile.text.toString()
-            val secondaryEmail = edSecondaryEmail.text.toString()
-            val street = edStreet.text.toString()
-            val otherStreet = edOtherStreet.text.toString()
-            val city = edCity.text.toString()
-            val otherCity = edOtherCity.text.toString()
-            val state = edState.text.toString()
-            val otherState = edOtherState.text.toString()
-            val country = edCountry.text.toString()
-            val otherCountry = edOtherCountry.text.toString()
-            val zipCode = edZip.text.toString()
-            val otherZipCode = edOtherZip.text.toString()
-            val description = edDescription.text.toString()
-            var selectedFilePath = ""
-            selectedFilePath = imagePath.ifEmpty {
+            val firstName       = edFirstName.text.toString()
+            val lastName        = edLastName.text.toString()
+            val email           = edEmail.text.toString()
+            val title           = edTitle.text.toString()
+            val company         = edCompany.text.toString()
+            val accountName     = edAccountName.text.toString()
+            val vendorName      = edVendorName.text.toString()
+            val leadSource      = edLeadSource.text.toString()
+            val dateOfBirth     = edBirthday.text.toString()
+            val phone           = edPhone.text.toString()
+            val otherPhone      = edOtherPhone.text.toString()
+            val mobile          = edMobile.text.toString()
+            val secondaryEmail  = edSecondaryEmail.text.toString()
+            val street          = edStreet.text.toString()
+            val otherStreet     = edOtherStreet.text.toString()
+            val city            = edCity.text.toString()
+            val otherCity       = edOtherCity.text.toString()
+            val state           = edState.text.toString()
+            val otherState      = edOtherState.text.toString()
+            val country         = edCountry.text.toString()
+            val otherCountry    = edOtherCountry.text.toString()
+            val zipCode         = edZip.text.toString()
+            val otherZipCode    = edOtherZip.text.toString()
+            val description     = edDescription.text.toString()
+            var selectedFilePath: String? = ""
+            selectedFilePath = if (imagePath != null) {
+                imagePath
+            } else {
                 ""
             }
             val contact = ContactModel(
-                firstName, lastName, email, title, accountName, vendorName, leadSource, dateOfBirth,
+                firstName, lastName, email, title, company, accountName, vendorName, leadSource, dateOfBirth,
                 phone, otherPhone, mobile, secondaryEmail, street, otherStreet,
                 city, otherCity, state, otherState, country, otherCountry, zipCode, otherZipCode,
-                description, selectedFilePath
+                description, selectedFilePath!!
             )
-            if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
+            val isInputEmpty = validateUserInput()
+            if (isInputEmpty) {
                 viewModel.insertContact(contact)
                 viewModel.success.observe(viewLifecycleOwner) {
                     if (!it.error) {
@@ -111,9 +140,74 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
+            } else {
+                Snackbar.make(binding.root, "Some fields are required", Snackbar.LENGTH_SHORT).show()
             }
         }
 
+    }
+
+    private fun validateUserInput(): Boolean {
+        var isAnyFieldEmpty = false
+        binding.apply {
+            if (edFirstName.text.toString().isNotEmpty() || edFirstName.text.toString().equals("", ignoreCase = true)) {
+                edFirstName.error = "First Name is required"
+                isAnyFieldEmpty = true
+            } else {
+                edFirstName.error = null
+                isAnyFieldEmpty = false
+            }
+
+            if (edLastName.text.toString().isNotEmpty() || edLastName.text.toString().equals("", ignoreCase = true)) {
+                edLastName.error = "Last Name is required"
+                isAnyFieldEmpty = true
+            } else {
+                edLastName.error = null
+                isAnyFieldEmpty = false
+            }
+
+            if (edEmail.text.toString().isNotEmpty() || edEmail.text.toString().equals("", ignoreCase = true)) {
+                edEmail.error = "Email is required"
+                isAnyFieldEmpty = true
+            } else {
+                edEmail.error = null
+                isAnyFieldEmpty = false
+            }
+
+            if (edTitle.text.toString().isNotEmpty() || edTitle.text.toString().equals("", ignoreCase = true)) {
+                edTitle.error = "Title Name is required"
+                isAnyFieldEmpty = true
+            } else {
+                edTitle.error = null
+                isAnyFieldEmpty = false
+            }
+
+            if (edPhone.text.toString().isNotEmpty() || edPhone.text.toString().equals("", ignoreCase = true)) {
+                edPhone.error = "Phone is required"
+                isAnyFieldEmpty = true
+            } else {
+                edPhone.error = null
+                isAnyFieldEmpty = false
+            }
+
+            if (edCity.text.toString().isNotEmpty() || edCity.text.toString().equals("", ignoreCase = true)) {
+                edCity.error = "City is required"
+                isAnyFieldEmpty = true
+            } else {
+                edCity.error = null
+                isAnyFieldEmpty = false
+            }
+
+            if (edCountry.text.toString().isNotEmpty() || edCountry.text.toString().equals("", ignoreCase = true)) {
+                edCountry.error = "Country is required"
+                isAnyFieldEmpty = true
+            } else {
+                edCountry.error = null
+                isAnyFieldEmpty = false
+            }
+        }
+
+        return isAnyFieldEmpty
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
@@ -202,8 +296,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                 .override(500, 500)
                 .into(binding.imageView)
 
-            val imageFile = File(imageUri.toString())
-            imagePath = imageFile.absolutePath
+            imagePath = getRealPathFromURI(imageUri!!, requireContext())
 
             photoDialog.dismiss()
             binding.btnSelectPhoto.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_edit_24))
@@ -220,6 +313,39 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 
     companion object {
         private val TAG = AddContactFragment::class.java.canonicalName
+    }
+
+    private fun getRealPathFromURI(uri: Uri, context: Context): String? {
+        val returnCursor: Cursor? = context.contentResolver.query(uri, null, null, null, null)
+        val nameIndex: Int = returnCursor!!.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        val sizeIndex: Int = returnCursor.getColumnIndex(OpenableColumns.SIZE)
+        returnCursor.moveToFirst()
+        val name: String = returnCursor.getString(nameIndex)
+        val size = returnCursor.getLong(sizeIndex).toString()
+        val file: File = File(context.filesDir, name)
+        try {
+            val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(file)
+            var read = 0
+            val maxBufferSize = 1 * 1024 * 1024
+            val bytesAvailable: Int = inputStream!!.available()
+
+            //int bufferSize = 1024;
+            val bufferSize = bytesAvailable.coerceAtMost(maxBufferSize)
+            val buffers = ByteArray(bufferSize)
+            while (inputStream.read(buffers).also { read = it } != -1) {
+                outputStream.write(buffers, 0, read)
+            }
+            Log.e("File Size", "Size " + file.length())
+            inputStream.close()
+            outputStream.close()
+            returnCursor.close()
+            Log.e("File Path", "Path " + file.path)
+            Log.e("File Size", "Size " + file.length())
+        } catch (e: Exception) {
+            Log.e("Exception", e.message!!)
+        }
+        return file.path
     }
 
 }
