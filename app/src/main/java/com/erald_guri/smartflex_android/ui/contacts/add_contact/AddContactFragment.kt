@@ -52,7 +52,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            edBirthday.setOnClickListener { datePickerDialog() }
+            includeContactInfo.edBirthday.setOnClickListener { datePickerDialog() }
             btnSelectPhoto.setOnClickListener { photoChooserDialog() }
             btnCreateContact.setOnClickListener { createContact() }
         }
@@ -89,34 +89,34 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 
     private val onDateSet = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
         selectedDate = "$dayOfMonth/$monthOfYear/$year"
-        binding.edBirthday.setText(selectedDate)
+        binding.includeContactInfo.edBirthday.setText(selectedDate)
     }
 
     private fun createContact() {
         binding.apply {
-            val firstName       = edFirstName.text.toString()
-            val lastName        = edLastName.text.toString()
-            val email           = edEmail.text.toString()
-            val title           = edTitle.text.toString()
-            val company         = edCompany.text.toString()
-            val accountName     = edAccountName.text.toString()
-            val vendorName      = edVendorName.text.toString()
-            val leadSource      = edLeadSource.text.toString()
-            val dateOfBirth     = edBirthday.text.toString()
-            val phone           = edPhone.text.toString()
-            val otherPhone      = edOtherPhone.text.toString()
-            val mobile          = edMobile.text.toString()
-            val secondaryEmail  = edSecondaryEmail.text.toString()
-            val street          = edStreet.text.toString()
-            val otherStreet     = edOtherStreet.text.toString()
-            val city            = edCity.text.toString()
-            val otherCity       = edOtherCity.text.toString()
-            val state           = edState.text.toString()
-            val otherState      = edOtherState.text.toString()
-            val country         = edCountry.text.toString()
-            val otherCountry    = edOtherCountry.text.toString()
-            val zipCode         = edZip.text.toString()
-            val otherZipCode    = edOtherZip.text.toString()
+            val firstName       = includeContactInfo.edFirstName.text.toString()
+            val lastName        = includeContactInfo.edLastName.text.toString()
+            val email           = includeContactInfo.edEmail.text.toString()
+            val title           = includeContactInfo.edTitle.text.toString()
+            val company         = includeContactInfo.edCompany.text.toString()
+            val accountName     = includeContactInfo.edAccountName.text.toString()
+            val vendorName      = includeContactInfo.edVendorName.text.toString()
+            val leadSource      = includeContactInfo.edLeadSource.text.toString()
+            val dateOfBirth     = includeContactInfo.edBirthday.text.toString()
+            val phone           = includeContactInfo.edPhone.text.toString()
+            val otherPhone      = includeContactInfo.edOtherPhone.text.toString()
+            val mobile          = includeContactInfo.edMobile.text.toString()
+            val secondaryEmail  = includeContactInfo.edSecondaryEmail.text.toString()
+            val street          = includeAddressInfo.edStreet.text.toString()
+            val otherStreet     = includeAddressInfo.edOtherStreet.text.toString()
+            val city            = includeAddressInfo.edCity.text.toString()
+            val otherCity       = includeAddressInfo.edOtherCity.text.toString()
+            val state           = includeAddressInfo.edState.text.toString()
+            val otherState      = includeAddressInfo.edOtherState.text.toString()
+            val country         = includeAddressInfo.edCountry.text.toString()
+            val otherCountry    = includeAddressInfo.edOtherCountry.text.toString()
+            val zipCode         = includeAddressInfo.edZip.text.toString()
+            val otherZipCode    = includeAddressInfo.edOtherZip.text.toString()
             val description     = edDescription.text.toString()
             var selectedFilePath: String? = ""
             selectedFilePath = if (imagePath != null) {
@@ -150,59 +150,59 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
     private fun validateUserInput(): Boolean {
         var isAnyFieldEmpty = false
         binding.apply {
-            if (edFirstName.text.toString().isNotEmpty() || edFirstName.text.toString().equals("", ignoreCase = true)) {
-                edFirstName.error = "First Name is required"
+            if (includeContactInfo.edFirstName.text.toString().isNotEmpty() || includeContactInfo.edFirstName.text.toString().equals("", ignoreCase = true)) {
+                includeContactInfo.edFirstName.error = "First Name is required"
                 isAnyFieldEmpty = true
             } else {
-                edFirstName.error = null
+                includeContactInfo.edFirstName.error = null
                 isAnyFieldEmpty = false
             }
 
-            if (edLastName.text.toString().isNotEmpty() || edLastName.text.toString().equals("", ignoreCase = true)) {
-                edLastName.error = "Last Name is required"
+            if (includeContactInfo.edLastName.text.toString().isNotEmpty() || includeContactInfo.edLastName.text.toString().equals("", ignoreCase = true)) {
+                includeContactInfo.edLastName.error = "Last Name is required"
                 isAnyFieldEmpty = true
             } else {
-                edLastName.error = null
+                includeContactInfo.edLastName.error = null
                 isAnyFieldEmpty = false
             }
 
-            if (edEmail.text.toString().isNotEmpty() || edEmail.text.toString().equals("", ignoreCase = true)) {
-                edEmail.error = "Email is required"
+            if (includeContactInfo.edEmail.text.toString().isNotEmpty() || includeContactInfo.edEmail.text.toString().equals("", ignoreCase = true)) {
+                includeContactInfo.edEmail.error = "Email is required"
                 isAnyFieldEmpty = true
             } else {
-                edEmail.error = null
+                includeContactInfo.edEmail.error = null
                 isAnyFieldEmpty = false
             }
 
-            if (edTitle.text.toString().isNotEmpty() || edTitle.text.toString().equals("", ignoreCase = true)) {
-                edTitle.error = "Title Name is required"
+            if (includeContactInfo.edTitle.text.toString().isNotEmpty() || includeContactInfo.edTitle.text.toString().equals("", ignoreCase = true)) {
+                includeContactInfo.edTitle.error = "Title Name is required"
                 isAnyFieldEmpty = true
             } else {
-                edTitle.error = null
+                includeContactInfo.edTitle.error = null
                 isAnyFieldEmpty = false
             }
 
-            if (edPhone.text.toString().isNotEmpty() || edPhone.text.toString().equals("", ignoreCase = true)) {
-                edPhone.error = "Phone is required"
+            if (includeContactInfo.edPhone.text.toString().isNotEmpty() || includeContactInfo.edPhone.text.toString().equals("", ignoreCase = true)) {
+                includeContactInfo.edPhone.error = "Phone is required"
                 isAnyFieldEmpty = true
             } else {
-                edPhone.error = null
+                includeContactInfo.edPhone.error = null
                 isAnyFieldEmpty = false
             }
 
-            if (edCity.text.toString().isNotEmpty() || edCity.text.toString().equals("", ignoreCase = true)) {
-                edCity.error = "City is required"
+            if (includeAddressInfo.edCity.text.toString().isNotEmpty() || includeAddressInfo.edCity.text.toString().equals("", ignoreCase = true)) {
+                includeAddressInfo.edCity.error = "City is required"
                 isAnyFieldEmpty = true
             } else {
-                edCity.error = null
+                includeAddressInfo.edCity.error = null
                 isAnyFieldEmpty = false
             }
 
-            if (edCountry.text.toString().isNotEmpty() || edCountry.text.toString().equals("", ignoreCase = true)) {
-                edCountry.error = "Country is required"
+            if (includeAddressInfo.edCountry.text.toString().isNotEmpty() || includeAddressInfo.edCountry.text.toString().equals("", ignoreCase = true)) {
+                includeAddressInfo.edCountry.error = "Country is required"
                 isAnyFieldEmpty = true
             } else {
-                edCountry.error = null
+                includeAddressInfo.edCountry.error = null
                 isAnyFieldEmpty = false
             }
         }
