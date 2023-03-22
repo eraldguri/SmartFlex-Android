@@ -16,13 +16,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.erald_guri.smartflex_android.R
+import com.erald_guri.smartflex_android.adapters.SocialAccountAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.ContactModel
+import com.erald_guri.smartflex_android.data.model.SocialLinkAccountModel
 import com.erald_guri.smartflex_android.databinding.DialogPhotoChoserBinding
 import com.erald_guri.smartflex_android.databinding.FragmentAddContactBinding
+import com.erald_guri.smartflex_android.databinding.LayoutNewSocialLinkBinding
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
+import com.erald_guri.smartflex_android.view_models.SocialLinkViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -33,6 +39,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.util.*
+import kotlin.collections.ArrayList
 
 const val CAMERA_PERMISSION_REQUEST = 100
 const val READ_EXTERNAL_STORAGE_REQUEST = 101
@@ -44,17 +51,31 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 ), EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private val viewModel by viewModels<ContactViewModel>()
+    private val linkViewModel by viewModels<SocialLinkViewModel>()
     private lateinit var photoDialog: AlertDialog
     private var imagePath: String? = null
     private lateinit var selectedDate: String
 
+    private lateinit var socialLinkAdapter: SocialAccountAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        linkViewModel.fetchAll()
+        linkViewModel.links.observe(viewLifecycleOwner) {
+            val linkList = ArrayList<SocialLinkAccountModel>(it)
+            socialLinkAdapter = SocialAccountAdapter(linkList)
+            binding.includeSocials.includeRecycler.recycler.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = socialLinkAdapter
+            }
+        }
 
         binding.apply {
             includeContactInfo.edBirthday.setOnClickListener { datePickerDialog() }
             btnSelectPhoto.setOnClickListener { photoChooserDialog() }
             btnCreateContact.setOnClickListener { createContact() }
+            includeSocials.btnAddAccount.setOnClickListener { socialLinksDialog() }
         }
     }
 
@@ -208,6 +229,35 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         }
 
         return isAnyFieldEmpty
+    }
+
+    private fun socialLinksDialog() {
+        val socialLinkBottomSheetDialog = BottomSheetDialog(requireContext())
+        val socialLinkBinding = LayoutNewSocialLinkBinding.inflate(layoutInflater)
+        socialLinkBottomSheetDialog.setContentView(socialLinkBinding.root)
+
+        socialLinkBinding.apply {
+            btnSave.setOnClickListener {
+                if (edLink.text.toString().isNotEmpty() || edLink.text.toString().equals("", ignoreCase = true)) {
+                    val name = edName.text.toString()
+                    val link = edLink.text.toString()
+                    val socialLinkModel = SocialLinkAccountModel(name, link)
+                    linkViewModel.insertLink(socialLinkModel)
+                    linkViewModel.success.observe(viewLifecycleOwner) {
+                        if (!it.error) {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
+        socialLinkBottomSheetDialog.show()
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {

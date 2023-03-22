@@ -42,4 +42,8 @@ object DatabaseModule {
     @Singleton
     fun providesAccountDao(database: FlexDatabase): AccountDao = database.accountDao()
 
+    @Provides
+    @Singleton
+    fun providesSocialLinkDao(database: FlexDatabase): SocialLinkDao = database.socialLinkDao()
+
 }
