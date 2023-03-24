@@ -10,4 +10,8 @@ class SocialLinkRepository @Inject constructor(private val socialLinkDao: Social
 
     suspend fun insertLink(link: SocialLinkAccountModel) = socialLinkDao.insertLink(link)
 
+    suspend fun updateLink(link: SocialLinkAccountModel) = socialLinkDao.updateLink(link)
+
+    suspend fun deleteLink(link: SocialLinkAccountModel) = socialLinkDao.deleteLink(link)
+
 }

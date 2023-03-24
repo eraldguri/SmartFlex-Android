@@ -48,4 +48,34 @@ class SocialLinkViewModel @Inject constructor(private val socialLinkRepository: 
         }
     }
 
+    fun updateLink(link: SocialLinkAccountModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                socialLinkRepository.updateLink(link)
+                _success.postValue(ResponseModel(false, "${link.title} updated successfully"))
+            } catch (e: Exception) {
+                if (e is SQLiteConstraintException) {
+                    _success.postValue(ResponseModel(true, "${link.title} already exists"))
+                } else {
+                    _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))
+                }
+            }
+        }
+    }
+
+    fun deleteLink(link: SocialLinkAccountModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                socialLinkRepository.deleteLink(link)
+                _success.postValue(ResponseModel(false, "${link.title} deleted successfully"))
+            } catch (e: Exception) {
+                if (e is SQLiteConstraintException) {
+                    _success.postValue(ResponseModel(true, "${link.title} already exists"))
+                } else {
+                    _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))
+                }
+            }
+        }
+    }
+
 }

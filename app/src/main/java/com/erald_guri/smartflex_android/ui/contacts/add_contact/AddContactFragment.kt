@@ -26,6 +26,7 @@ import com.erald_guri.smartflex_android.data.model.SocialLinkAccountModel
 import com.erald_guri.smartflex_android.databinding.DialogPhotoChoserBinding
 import com.erald_guri.smartflex_android.databinding.FragmentAddContactBinding
 import com.erald_guri.smartflex_android.databinding.LayoutNewSocialLinkBinding
+import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
 import com.erald_guri.smartflex_android.view_models.SocialLinkViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -57,6 +58,8 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
     private lateinit var selectedDate: String
 
     private lateinit var socialLinkAdapter: SocialAccountAdapter
+    private lateinit var socialLinkAccountModel: SocialLinkAccountModel
+    private var socialLinkAccountListPosition: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,7 +67,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         linkViewModel.fetchAll()
         linkViewModel.links.observe(viewLifecycleOwner) {
             val linkList = ArrayList<SocialLinkAccountModel>(it)
-            socialLinkAdapter = SocialAccountAdapter(linkList)
+            socialLinkAdapter = SocialAccountAdapter(linkList, onSocialTaskListener)
             binding.includeSocials.includeRecycler.recycler.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = socialLinkAdapter
@@ -75,7 +78,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
             includeContactInfo.edBirthday.setOnClickListener { datePickerDialog() }
             btnSelectPhoto.setOnClickListener { photoChooserDialog() }
             btnCreateContact.setOnClickListener { createContact() }
-            includeSocials.btnAddAccount.setOnClickListener { socialLinksDialog() }
+            includeSocials.btnAddAccount.setOnClickListener { socialLinksDialog(false) }
         }
     }
 
@@ -231,33 +234,88 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         return isAnyFieldEmpty
     }
 
-    private fun socialLinksDialog() {
+    private fun socialLinksDialog(isEditMode: Boolean) {
         val socialLinkBottomSheetDialog = BottomSheetDialog(requireContext())
         val socialLinkBinding = LayoutNewSocialLinkBinding.inflate(layoutInflater)
         socialLinkBottomSheetDialog.setContentView(socialLinkBinding.root)
 
         socialLinkBinding.apply {
-            btnSave.setOnClickListener {
-                if (edLink.text.toString().isNotEmpty() || edLink.text.toString().equals("", ignoreCase = true)) {
-                    val name = edName.text.toString()
-                    val link = edLink.text.toString()
-                    val socialLinkModel = SocialLinkAccountModel(name, link)
-                    linkViewModel.insertLink(socialLinkModel)
-                    linkViewModel.success.observe(viewLifecycleOwner) {
-                        if (!it.error) {
-                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+
+            if (isEditMode) {
+                edName.setText(socialLinkAccountModel.title)
+                edLink.setText(socialLinkAccountModel.link)
+                btnSave.text = getString(R.string.edit)
+
+                btnSave.setOnClickListener {
+                    if (edLink.text.toString().isNotEmpty() || edLink.text.toString().equals("", ignoreCase = true)) {
+                        val name = edName.text.toString()
+                        val link = edLink.text.toString()
+                        val socialLinkModel = SocialLinkAccountModel(name, link)
+                        socialLinkModel.id = socialLinkAccountModel.id
+
+                        linkViewModel.updateLink(socialLinkModel)
+                        linkViewModel.success.observe(viewLifecycleOwner) {
+                            if (!it.error) {
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                socialLinkBottomSheetDialog.dismiss()
+                                socialLinkAdapter.updateLink(socialLinkAccountListPosition, socialLinkModel)
+                            } else {
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            }
                         }
+                    } else {
+                        Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                btnSave.setOnClickListener {
+                    if (edLink.text.toString().isNotEmpty() || edLink.text.toString().equals("", ignoreCase = true)) {
+                        val name = edName.text.toString()
+                        val link = edLink.text.toString()
+                        val socialLinkModel = SocialLinkAccountModel(name, link)
+                        linkViewModel.insertLink(socialLinkModel)
+                        linkViewModel.success.observe(viewLifecycleOwner) {
+                            if (!it.error) {
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                socialLinkBottomSheetDialog.dismiss()
+                                socialLinkAdapter.addLink(socialLinkModel)
+                            } else {
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
         }
 
         socialLinkBottomSheetDialog.show()
+    }
+
+    private val onSocialTaskListener = object: OnTaskListener<SocialLinkAccountModel> {
+        override fun onItemClick(task: SocialLinkAccountModel) {
+
+        }
+
+        override fun onEdit(position: Int, task: SocialLinkAccountModel) {
+            socialLinkAccountModel = task
+            socialLinkAccountListPosition = position
+            socialLinksDialog(true)
+        }
+
+        override fun onDelete(position: Int, task: SocialLinkAccountModel) {
+            linkViewModel.deleteLink(task)
+            linkViewModel.success.observe(viewLifecycleOwner) {
+                if (!it.error) {
+                    socialLinkAdapter.removeLink(task)
+                } else {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
