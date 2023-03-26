@@ -61,9 +61,67 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
     private lateinit var socialLinkAccountModel: SocialLinkAccountModel
     private var socialLinkAccountListPosition: Int = 0
 
+    private var isEditContactMode: Boolean? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        isEditContactMode = AddContactFragmentArgs.fromBundle(requireArguments()).isEditMode
+        val contactId = AddContactFragmentArgs.fromBundle(requireArguments()).contactId
+
+        if (isEditContactMode!!) {
+            binding.includeSocials.root.visibility = View.VISIBLE
+            fetchContact(contactId)
+            fetchSocials()
+        } else {
+            binding.includeSocials.root.visibility = View.GONE
+        }
+
+        binding.apply {
+            includeContactInfo.edBirthday.setOnClickListener { datePickerDialog() }
+            btnSelectPhoto.setOnClickListener { photoChooserDialog() }
+            btnCreateContact.setOnClickListener { createContact() }
+            includeSocials.btnAddAccount.setOnClickListener { socialLinksDialog(false) }
+        }
+    }
+
+    private fun fetchContact(contactId: Int) {
+        binding.apply {
+            viewModel.getContactById(contactId)
+            viewModel.contact.observe(viewLifecycleOwner) {
+                includeContactInfo.apply {
+                    edFirstName.setText(it.firstName)
+                    edLastName.setText(it.lastName)
+                    edEmail.setText(it.email)
+                    edTitle.setText(it.title)
+                    edCompany.setText(it.company)
+                    edAccountName.setText(it.accountName)
+                    edVendorName.setText(it.vendorName)
+                    edLeadSource.setText(it.leadSource)
+                    edBirthday.setText(it.dateOfBirth)
+                    edPhone.setText(it.phone)
+                    edOtherPhone.setText(it.otherPhone)
+                    edMobile.setText(it.mobile)
+                    edSecondaryEmail.setText(it.secondaryEmail)
+                }
+                includeAddressInfo.apply {
+                    edStreet.setText(it.street)
+                    edOtherStreet.setText(it.otherStreet)
+                    edCity.setText(it.city)
+                    edOtherCity.setText(it.otherCity)
+                    edState.setText(it.state)
+                    edOtherState.setText(it.otherState)
+                    edCountry.setText(it.country)
+                    edOtherCountry.setText(it.otherCountry)
+                    edZip.setText(it.zipCode)
+                    edOtherZip.setText(it.otherZipCode)
+                    edDescription.setText(it.description)
+                }
+            }
+        }
+    }
+
+    private fun fetchSocials() {
         linkViewModel.fetchAll()
         linkViewModel.links.observe(viewLifecycleOwner) {
             val linkList = ArrayList<SocialLinkAccountModel>(it)
@@ -72,13 +130,6 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = socialLinkAdapter
             }
-        }
-
-        binding.apply {
-            includeContactInfo.edBirthday.setOnClickListener { datePickerDialog() }
-            btnSelectPhoto.setOnClickListener { photoChooserDialog() }
-            btnCreateContact.setOnClickListener { createContact() }
-            includeSocials.btnAddAccount.setOnClickListener { socialLinksDialog(false) }
         }
     }
 
@@ -154,84 +205,21 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                 city, otherCity, state, otherState, country, otherCountry, zipCode, otherZipCode,
                 description, selectedFilePath!!
             )
-            val isInputEmpty = validateUserInput()
-            if (isInputEmpty) {
+            if (firstName.isNotEmpty()) {
                 viewModel.insertContact(contact)
                 viewModel.success.observe(viewLifecycleOwner) {
                     if (!it.error) {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        val action = AddContactFragmentDirections.actionAddContactFragmentToNavContacts()
+                        findNavController().navigate(action)
                     } else {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Snackbar.make(binding.root, "Some fields are required", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "First Name isrequired", Snackbar.LENGTH_SHORT).show()
             }
         }
 
-    }
-
-    private fun validateUserInput(): Boolean {
-        var isAnyFieldEmpty = false
-        binding.apply {
-            if (includeContactInfo.edFirstName.text.toString().isNotEmpty() || includeContactInfo.edFirstName.text.toString().equals("", ignoreCase = true)) {
-                includeContactInfo.edFirstName.error = "First Name is required"
-                isAnyFieldEmpty = true
-            } else {
-                includeContactInfo.edFirstName.error = null
-                isAnyFieldEmpty = false
-            }
-
-            if (includeContactInfo.edLastName.text.toString().isNotEmpty() || includeContactInfo.edLastName.text.toString().equals("", ignoreCase = true)) {
-                includeContactInfo.edLastName.error = "Last Name is required"
-                isAnyFieldEmpty = true
-            } else {
-                includeContactInfo.edLastName.error = null
-                isAnyFieldEmpty = false
-            }
-
-            if (includeContactInfo.edEmail.text.toString().isNotEmpty() || includeContactInfo.edEmail.text.toString().equals("", ignoreCase = true)) {
-                includeContactInfo.edEmail.error = "Email is required"
-                isAnyFieldEmpty = true
-            } else {
-                includeContactInfo.edEmail.error = null
-                isAnyFieldEmpty = false
-            }
-
-            if (includeContactInfo.edTitle.text.toString().isNotEmpty() || includeContactInfo.edTitle.text.toString().equals("", ignoreCase = true)) {
-                includeContactInfo.edTitle.error = "Title Name is required"
-                isAnyFieldEmpty = true
-            } else {
-                includeContactInfo.edTitle.error = null
-                isAnyFieldEmpty = false
-            }
-
-            if (includeContactInfo.edPhone.text.toString().isNotEmpty() || includeContactInfo.edPhone.text.toString().equals("", ignoreCase = true)) {
-                includeContactInfo.edPhone.error = "Phone is required"
-                isAnyFieldEmpty = true
-            } else {
-                includeContactInfo.edPhone.error = null
-                isAnyFieldEmpty = false
-            }
-
-            if (includeAddressInfo.edCity.text.toString().isNotEmpty() || includeAddressInfo.edCity.text.toString().equals("", ignoreCase = true)) {
-                includeAddressInfo.edCity.error = "City is required"
-                isAnyFieldEmpty = true
-            } else {
-                includeAddressInfo.edCity.error = null
-                isAnyFieldEmpty = false
-            }
-
-            if (includeAddressInfo.edCountry.text.toString().isNotEmpty() || includeAddressInfo.edCountry.text.toString().equals("", ignoreCase = true)) {
-                includeAddressInfo.edCountry.error = "Country is required"
-                isAnyFieldEmpty = true
-            } else {
-                includeAddressInfo.edCountry.error = null
-                isAnyFieldEmpty = false
-            }
-        }
-
-        return isAnyFieldEmpty
     }
 
     private fun socialLinksDialog(isEditMode: Boolean) {
@@ -251,7 +239,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                         val name = edName.text.toString()
                         val link = edLink.text.toString()
                         val socialLinkModel = SocialLinkAccountModel(name, link)
-                        socialLinkModel.id = socialLinkAccountModel.id
+                        socialLinkModel.socialId = socialLinkAccountModel.socialId
 
                         linkViewModel.updateLink(socialLinkModel)
                         linkViewModel.success.observe(viewLifecycleOwner) {
@@ -264,7 +252,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                             }
                         }
                     } else {
-                        Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.all_fields_are_required), Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {

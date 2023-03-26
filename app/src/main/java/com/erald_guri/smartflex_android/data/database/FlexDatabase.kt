@@ -14,7 +14,7 @@ import com.erald_guri.smartflex_android.data.model.*
         AccountModel::class,
         SocialLinkAccountModel::class
     ],
-    version = 10
+    version = 15
 )
 abstract class FlexDatabase : RoomDatabase() {
 

@@ -1,21 +1,16 @@
 package com.erald_guri.smartflex_android.ui.contacts
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.adapters.ContactListAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.databinding.FragmentContactsBinding
+import com.erald_guri.smartflex_android.interfaces.OnContactListener
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +30,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
     private fun observeContacts() {
         viewModel.fetchContacts()
         viewModel.contacts.observe(viewLifecycleOwner) {
-            contactAdapter = ContactListAdapter(requireContext(), it)
+            contactAdapter = ContactListAdapter(requireContext(), it, onContactListener)
             binding.includeRecycler.recycler.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = contactAdapter
@@ -43,10 +38,38 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
         }
     }
 
+    private val onContactListener = object : OnContactListener {
+        override fun onDetailView(contactId: Int?) {
+
+        }
+
+        override fun onEditContact(contactId: Int?) {
+            val action = ContactsFragmentDirections.actionNavContactsToAddContactFragment(true, contactId!!)
+            findNavController().navigate(action)
+        }
+
+        override fun onDeleteContact() {
+
+        }
+
+        override fun onFavorite() {
+
+        }
+
+        override fun onCall() {
+
+        }
+
+        override fun onMessage() {
+
+        }
+
+    }
+
     override fun onFabButton(fabButton: FloatingActionButton?) {
         fabButton?.show()
         fabButton?.setOnClickListener {
-            val action = ContactsFragmentDirections.actionNavContactsToAddContactFragment()
+            val action = ContactsFragmentDirections.actionNavContactsToAddContactFragment(false, -1)
             findNavController().navigate(action)
         }
     }

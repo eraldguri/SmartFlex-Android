@@ -7,16 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.LayoutContactListItemBinding
 import com.erald_guri.smartflex_android.holders.ContactListViewHolder
+import com.erald_guri.smartflex_android.interfaces.OnContactListener
 
 class ContactListAdapter(
     private val context: Context,
-    private val contacts: List<ContactModel>
+    private val contacts: List<ContactModel>,
+    private val onContactListener: OnContactListener
 ) : RecyclerView.Adapter<ContactListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = LayoutContactListItemBinding.inflate(inflater, parent, false)
-        return ContactListViewHolder(context, binding)
+        return ContactListViewHolder(context, binding, onContactListener)
     }
 
     override fun onBindViewHolder(holder: ContactListViewHolder, position: Int) {

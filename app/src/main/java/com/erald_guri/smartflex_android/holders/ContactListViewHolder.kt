@@ -8,20 +8,18 @@ import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.base.BaseViewHolder
 import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.LayoutContactListItemBinding
+import com.erald_guri.smartflex_android.interfaces.OnContactListener
 
 class ContactListViewHolder(
     private val context: Context,
-    private val binding: LayoutContactListItemBinding
+    private val binding: LayoutContactListItemBinding,
+    private val onContactListener: OnContactListener
 ) : BaseViewHolder<ContactModel>(binding.root) {
 
     override fun onBind(item: ContactModel) {
         binding.apply {
-            tvPhone.text = item.phone
             tvFullName.text = "${item.firstName} ${item.lastName}"
             tvTitle.text = item.title
-            tvCompany.text = item.company
-            tvCity.text = item.city
-            tvCountry.text = item.country
 
             val imageUri = Uri.parse(item.photoPath)
             imageView.imageTintMode = null
@@ -36,6 +34,12 @@ class ContactListViewHolder(
                     .override(500, 500)
                     .into(imageView)
             }
+
+            root.setOnClickListener { onContactListener.onDetailView(item.id) }
+            btnEdit.setOnClickListener { onContactListener.onEditContact(item.id) }
+            btnFavorite.setOnClickListener { onContactListener.onFavorite() }
+            btnCall.setOnClickListener { onContactListener.onCall() }
+            btnMessage.setOnClickListener { onContactListener.onMessage() }
         }
     }
 }

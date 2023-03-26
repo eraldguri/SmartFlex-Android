@@ -22,10 +22,24 @@ class ContactViewModel @Inject constructor(private val contactRepository: Contac
     private var _contacts = MutableLiveData<List<ContactModel>>()
     val contacts: LiveData<List<ContactModel>> = _contacts
 
+    private var _contact = MutableLiveData<ContactModel>()
+    val contact: LiveData<ContactModel> = _contact
+
     fun fetchContacts() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _contacts.postValue(contactRepository.selectAll())
+                _success.postValue(ResponseModel(false, "success"))
+            } catch (e: Exception) {
+                _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))
+            }
+        }
+    }
+
+    fun getContactById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _contact.postValue(contactRepository.getContactById(id))
                 _success.postValue(ResponseModel(false, "success"))
             } catch (e: Exception) {
                 _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))

@@ -9,5 +9,5 @@ data class SocialLinkAccountModel(
     var link: String
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var socialId: Int? = null
 }

@@ -63,6 +63,15 @@
         <action
             android:id="@+id/action_addContactFragment_to_previewFragment"
             app:destination="@id/previewFragment" />
+        <action
+            android:id="@+id/action_addContactFragment_to_nav_contacts"
+            app:destination="@id/nav_contacts" />
+        <argument
+            android:name="isEditMode"
+            app:argType="boolean" />
+        <argument
+            android:name="contactId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/previewFragment"

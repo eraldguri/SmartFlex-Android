@@ -8,6 +8,8 @@ class ContactRepository @Inject constructor(private val contactDao: ContactDao) 
 
     suspend fun selectAll() = contactDao.selectAll()
 
+    suspend fun getContactById(id: Int): ContactModel = contactDao.getContactById(id)
+
     suspend fun insertContact(contact: ContactModel) = contactDao.insertContact(contact)
 
 }

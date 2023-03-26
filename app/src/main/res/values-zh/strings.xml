@@ -47,4 +47,5 @@
     <string name="skype">Skype</string>
     <string name="save">Save</string>
     <string name="edit">Edit</string>
+    <string name="all_fields_are_required">All fields are required</string>
 </resources>

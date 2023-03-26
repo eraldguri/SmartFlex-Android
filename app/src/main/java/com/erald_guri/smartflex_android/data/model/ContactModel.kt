@@ -1,9 +1,17 @@
 package com.erald_guri.smartflex_android.data.model
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    tableName = "Contact",
+    indices = [
+        Index("firstName", unique = true),
+        Index("lastName", unique = true)
+    ]
+)
 class ContactModel(
     var firstName: String,
     var lastName: String,
@@ -29,7 +37,7 @@ class ContactModel(
     var zipCode: String,
     var otherZipCode: String,
     var description: String,
-    var photoPath: String
+    var photoPath: String,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
