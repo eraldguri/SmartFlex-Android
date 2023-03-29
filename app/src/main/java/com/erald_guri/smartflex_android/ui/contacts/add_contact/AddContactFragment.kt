@@ -62,15 +62,17 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
     private var socialLinkAccountListPosition: Int = 0
 
     private var isEditContactMode: Boolean? = null
+    private var contactId: Int = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         isEditContactMode = AddContactFragmentArgs.fromBundle(requireArguments()).isEditMode
-        val contactId = AddContactFragmentArgs.fromBundle(requireArguments()).contactId
+        contactId = AddContactFragmentArgs.fromBundle(requireArguments()).contactId
 
         if (isEditContactMode!!) {
             binding.includeSocials.root.visibility = View.VISIBLE
+            binding.btnCreateContact.text = getString(R.string.edit_contact)
             fetchContact(contactId)
             fetchSocials()
         } else {
@@ -80,7 +82,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         binding.apply {
             includeContactInfo.edBirthday.setOnClickListener { datePickerDialog() }
             btnSelectPhoto.setOnClickListener { photoChooserDialog() }
-            btnCreateContact.setOnClickListener { createContact() }
+            btnCreateContact.setOnClickListener { prepareContact() }
             includeSocials.btnAddAccount.setOnClickListener { socialLinksDialog(false) }
         }
     }
@@ -159,7 +161,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
             now.get(Calendar.MONTH),
             now.get(Calendar.DAY_OF_MONTH)
         )
-        childFragmentManager.let { datePickerDialog.show(it, "Datepickerdialog") };
+        childFragmentManager.let { datePickerDialog.show(it, "Datepickerdialog") }
     }
 
     private val onDateSet = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -167,7 +169,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         binding.includeContactInfo.edBirthday.setText(selectedDate)
     }
 
-    private fun createContact() {
+    private fun prepareContact() {
         binding.apply {
             val firstName       = includeContactInfo.edFirstName.text.toString()
             val lastName        = includeContactInfo.edLastName.text.toString()
@@ -205,21 +207,47 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                 city, otherCity, state, otherState, country, otherCountry, zipCode, otherZipCode,
                 description, selectedFilePath!!
             )
-            if (firstName.isNotEmpty()) {
-                viewModel.insertContact(contact)
-                viewModel.success.observe(viewLifecycleOwner) {
-                    if (!it.error) {
-                        val action = AddContactFragmentDirections.actionAddContactFragmentToNavContacts()
-                        findNavController().navigate(action)
-                    } else {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
+
+            if (!isEditContactMode!!) {
+                createContact(contact)
             } else {
-                Snackbar.make(binding.root, "First Name isrequired", Snackbar.LENGTH_SHORT).show()
+                updateContact(contact)
             }
         }
 
+    }
+
+    private fun createContact(contact: ContactModel) {
+        if (binding.includeContactInfo.edFirstName.text.isNotEmpty()) {
+            viewModel.insertContact(contact)
+            viewModel.success.observe(viewLifecycleOwner) {
+                if (!it.error) {
+                    val action = AddContactFragmentDirections.actionAddContactFragmentToNavContacts()
+                    findNavController().navigate(action)
+                } else {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            Snackbar.make(binding.root, "First Name is required", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateContact(contact: ContactModel) {
+        contact.id = contactId
+        if (binding.includeContactInfo.edFirstName.text.isNotEmpty()) {
+            viewModel.updateContact(contact)
+            viewModel.success.observe(viewLifecycleOwner) {
+                if (!it.error) {
+                    val action = AddContactFragmentDirections.actionAddContactFragmentToNavContacts()
+                    findNavController().navigate(action)
+                } else {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            Snackbar.make(binding.root, "First Name is required", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun socialLinksDialog(isEditMode: Boolean) {
