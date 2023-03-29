@@ -10,7 +10,7 @@ interface OnContactListener {
 
     fun onFavorite()
 
-    fun onCall()
+    fun onCall(phone: String)
 
     fun onMessage()
 }

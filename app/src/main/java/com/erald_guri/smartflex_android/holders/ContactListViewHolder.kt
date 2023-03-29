@@ -38,7 +38,7 @@ class ContactListViewHolder(
             root.setOnClickListener { onContactListener.onDetailView(item.id) }
             btnEdit.setOnClickListener { onContactListener.onEditContact(item.id) }
             btnFavorite.setOnClickListener { onContactListener.onFavorite() }
-            btnCall.setOnClickListener { onContactListener.onCall() }
+            btnCall.setOnClickListener { onContactListener.onCall(item.phone) }
             btnMessage.setOnClickListener { onContactListener.onMessage() }
         }
     }
