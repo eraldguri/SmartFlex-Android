@@ -117,15 +117,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="113dp" />
 
-        <include
-            android:id="@+id/include_socials"
-            layout="@layout/include_socials"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_description" />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_create_contact"
             style="@style/MainButtonStyle"
@@ -139,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_socials" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

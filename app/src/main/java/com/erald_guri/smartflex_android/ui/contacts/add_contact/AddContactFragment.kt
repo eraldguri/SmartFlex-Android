@@ -16,20 +16,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.erald_guri.smartflex_android.R
-import com.erald_guri.smartflex_android.adapters.SocialAccountAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.ContactModel
-import com.erald_guri.smartflex_android.data.model.SocialLinkAccountModel
 import com.erald_guri.smartflex_android.databinding.DialogPhotoChoserBinding
 import com.erald_guri.smartflex_android.databinding.FragmentAddContactBinding
-import com.erald_guri.smartflex_android.databinding.LayoutNewSocialLinkBinding
-import com.erald_guri.smartflex_android.interfaces.OnTaskListener
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
-import com.erald_guri.smartflex_android.view_models.SocialLinkViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -40,7 +33,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
 const val CAMERA_PERMISSION_REQUEST = 100
 const val READ_EXTERNAL_STORAGE_REQUEST = 101
@@ -52,14 +44,9 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 ), EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private val viewModel by viewModels<ContactViewModel>()
-    private val linkViewModel by viewModels<SocialLinkViewModel>()
     private lateinit var photoDialog: AlertDialog
     private var imagePath: String? = null
     private lateinit var selectedDate: String
-
-    private lateinit var socialLinkAdapter: SocialAccountAdapter
-    private lateinit var socialLinkAccountModel: SocialLinkAccountModel
-    private var socialLinkAccountListPosition: Int = 0
 
     private var isEditContactMode: Boolean? = null
     private var contactId: Int = -1
@@ -71,19 +58,16 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         contactId = AddContactFragmentArgs.fromBundle(requireArguments()).contactId
 
         if (isEditContactMode!!) {
-            binding.includeSocials.root.visibility = View.VISIBLE
             binding.btnCreateContact.text = getString(R.string.edit_contact)
             fetchContact(contactId)
-            fetchSocials()
         } else {
-            binding.includeSocials.root.visibility = View.GONE
+
         }
 
         binding.apply {
             includeContactInfo.edBirthday.setOnClickListener { datePickerDialog() }
             btnSelectPhoto.setOnClickListener { photoChooserDialog() }
             btnCreateContact.setOnClickListener { prepareContact() }
-            includeSocials.btnAddAccount.setOnClickListener { socialLinksDialog(false) }
         }
     }
 
@@ -119,18 +103,6 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
                     edOtherZip.setText(it.otherZipCode)
                     edDescription.setText(it.description)
                 }
-            }
-        }
-    }
-
-    private fun fetchSocials() {
-        linkViewModel.fetchAll()
-        linkViewModel.links.observe(viewLifecycleOwner) {
-            val linkList = ArrayList<SocialLinkAccountModel>(it)
-            socialLinkAdapter = SocialAccountAdapter(linkList, onSocialTaskListener)
-            binding.includeSocials.includeRecycler.recycler.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = socialLinkAdapter
             }
         }
     }
@@ -248,90 +220,6 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
         } else {
             Snackbar.make(binding.root, "First Name is required", Snackbar.LENGTH_SHORT).show()
         }
-    }
-
-    private fun socialLinksDialog(isEditMode: Boolean) {
-        val socialLinkBottomSheetDialog = BottomSheetDialog(requireContext())
-        val socialLinkBinding = LayoutNewSocialLinkBinding.inflate(layoutInflater)
-        socialLinkBottomSheetDialog.setContentView(socialLinkBinding.root)
-
-        socialLinkBinding.apply {
-
-            if (isEditMode) {
-                edName.setText(socialLinkAccountModel.title)
-                edLink.setText(socialLinkAccountModel.link)
-                btnSave.text = getString(R.string.edit)
-
-                btnSave.setOnClickListener {
-                    if (edLink.text.toString().isNotEmpty() || edLink.text.toString().equals("", ignoreCase = true)) {
-                        val name = edName.text.toString()
-                        val link = edLink.text.toString()
-                        val socialLinkModel = SocialLinkAccountModel(name, link)
-                        socialLinkModel.socialId = socialLinkAccountModel.socialId
-
-                        linkViewModel.updateLink(socialLinkModel)
-                        linkViewModel.success.observe(viewLifecycleOwner) {
-                            if (!it.error) {
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                                socialLinkBottomSheetDialog.dismiss()
-                                socialLinkAdapter.updateLink(socialLinkAccountListPosition, socialLinkModel)
-                            } else {
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), getString(R.string.all_fields_are_required), Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } else {
-                btnSave.setOnClickListener {
-                    if (edLink.text.toString().isNotEmpty() || edLink.text.toString().equals("", ignoreCase = true)) {
-                        val name = edName.text.toString()
-                        val link = edLink.text.toString()
-                        val socialLinkModel = SocialLinkAccountModel(name, link)
-                        linkViewModel.insertLink(socialLinkModel)
-                        linkViewModel.success.observe(viewLifecycleOwner) {
-                            if (!it.error) {
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                                socialLinkBottomSheetDialog.dismiss()
-                                socialLinkAdapter.addLink(socialLinkModel)
-                            } else {
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-
-        }
-
-        socialLinkBottomSheetDialog.show()
-    }
-
-    private val onSocialTaskListener = object: OnTaskListener<SocialLinkAccountModel> {
-        override fun onItemClick(task: SocialLinkAccountModel) {
-
-        }
-
-        override fun onEdit(position: Int, task: SocialLinkAccountModel) {
-            socialLinkAccountModel = task
-            socialLinkAccountListPosition = position
-            socialLinksDialog(true)
-        }
-
-        override fun onDelete(position: Int, task: SocialLinkAccountModel) {
-            linkViewModel.deleteLink(task)
-            linkViewModel.success.observe(viewLifecycleOwner) {
-                if (!it.error) {
-                    socialLinkAdapter.removeLink(task)
-                } else {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
