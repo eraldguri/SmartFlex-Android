@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erald_guri.smartflex_android.adapters.ContactListAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
+import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.FragmentContactsBinding
 import com.erald_guri.smartflex_android.interfaces.OnContactListener
-import com.erald_guri.smartflex_android.ui.contacts.add_contact.AddContactFragment
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,8 +62,14 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
 
         }
 
-        override fun onFavorite() {
-
+        override fun onFavorite(contact: ContactModel, isFavorite: Boolean) {
+            if (isFavorite) {
+                contact.isFavorite = 1
+                viewModel.addToFavorites(contact)
+            } else {
+                contact.isFavorite = 0
+                viewModel.addToFavorites(contact)
+            }
         }
 
         override fun onCall(phone: String) {

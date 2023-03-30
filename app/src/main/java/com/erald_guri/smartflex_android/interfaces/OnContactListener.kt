@@ -1,5 +1,7 @@
 package com.erald_guri.smartflex_android.interfaces
 
+import com.erald_guri.smartflex_android.data.model.ContactModel
+
 interface OnContactListener {
 
     fun onDetailView(contactId: Int?)
@@ -8,7 +10,7 @@ interface OnContactListener {
 
     fun onDeleteContact()
 
-    fun onFavorite()
+    fun onFavorite(contact: ContactModel, isFavorite: Boolean)
 
     fun onCall(phone: String)
 

@@ -13,7 +13,7 @@ import com.erald_guri.smartflex_android.data.model.*
         ContactModel::class,
         AccountModel::class
     ],
-    version = 16
+    version = 17
 )
 abstract class FlexDatabase : RoomDatabase() {
 

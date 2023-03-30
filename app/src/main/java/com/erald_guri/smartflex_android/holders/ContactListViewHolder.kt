@@ -37,7 +37,24 @@ class ContactListViewHolder(
 
             root.setOnClickListener { onContactListener.onDetailView(item.id) }
             btnEdit.setOnClickListener { onContactListener.onEditContact(item.id) }
-            btnFavorite.setOnClickListener { onContactListener.onFavorite() }
+
+            var isFavorite = false
+            isFavorite = if (item.isFavorite == 0) {
+                btnFavorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_outline))
+                false
+            } else {
+                btnFavorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_filled))
+                true
+            }
+            btnFavorite.setOnClickListener {
+                if (isFavorite) {
+                    btnFavorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_outline))
+                    onContactListener.onFavorite(item, false)
+                } else {
+                    btnFavorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_filled))
+                    onContactListener.onFavorite(item, true)
+                }
+            }
             btnCall.setOnClickListener { onContactListener.onCall(item.phone) }
             btnMessage.setOnClickListener { onContactListener.onMessage() }
         }

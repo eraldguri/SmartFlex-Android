@@ -17,4 +17,7 @@ interface ContactDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateContact(contact: ContactModel)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addToFavorites(contact: ContactModel)
 }

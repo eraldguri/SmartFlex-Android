@@ -190,6 +190,7 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
     }
 
     private fun createContact(contact: ContactModel) {
+        contact.isFavorite = 0
         if (binding.includeContactInfo.edFirstName.text.isNotEmpty()) {
             viewModel.insertContact(contact)
             viewModel.success.observe(viewLifecycleOwner) {

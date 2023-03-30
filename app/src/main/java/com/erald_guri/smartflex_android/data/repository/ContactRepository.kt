@@ -14,4 +14,6 @@ class ContactRepository @Inject constructor(private val contactDao: ContactDao) 
 
     suspend fun updateContact(contact: ContactModel) = contactDao.updateContact(contact)
 
+    suspend fun addToFavorites(contact: ContactModel) = contactDao.addToFavorites(contact)
+
 }

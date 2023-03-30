@@ -38,7 +38,15 @@ class ContactModel(
     var otherZipCode: String,
     var description: String,
     var photoPath: String,
+    var isFavorite: Int = 0
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
+
+    constructor() : this(
+        "", "", "", "", "",
+        "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "",
+        "", "", "", "", ""
+    )
 }

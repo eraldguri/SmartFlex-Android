@@ -77,4 +77,19 @@ class ContactViewModel @Inject constructor(private val contactRepository: Contac
         }
     }
 
+    fun addToFavorites(contact: ContactModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                contactRepository.addToFavorites(contact)
+                _success.postValue(ResponseModel(false, "${contact.firstName} ${contact.lastName} added successfully"))
+            } catch (e: Exception) {
+                if (e is SQLiteConstraintException) {
+                    _success.postValue(ResponseModel(true, "${contact.firstName} ${contact.lastName} already exists"))
+                } else {
+                    _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))
+                }
+            }
+        }
+    }
+
 }
