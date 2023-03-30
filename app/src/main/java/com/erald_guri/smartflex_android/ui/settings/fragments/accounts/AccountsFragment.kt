@@ -2,6 +2,7 @@ package com.erald_guri.smartflex_android.ui.settings.fragments.accounts
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.erald_guri.smartflex_android.base.BaseFragment
@@ -27,6 +28,10 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>(
             val action = AccountsFragmentDirections.actionNavAccountsToCreateAccountFragment()
             findNavController().navigate(action)
         }
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
+
     }
 
 }

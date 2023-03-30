@@ -18,6 +18,7 @@ import android.view.Surface
 import android.view.TextureView
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.databinding.FragmentPreviewBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -290,6 +291,10 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>(
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
         fabButton?.hide()
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
+
     }
 
 }

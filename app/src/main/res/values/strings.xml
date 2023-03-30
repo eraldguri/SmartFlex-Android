@@ -72,4 +72,14 @@
     <string name="edit">Edit</string>
     <string name="all_fields_are_required">All fields are required</string>
     <string name="edit_contact">Edit Contact</string>
+    <string name="email_not_set">Email is not set</string>
+    <string name="phone_not_set">Phone number is not set</string>
+    <string name="title_not_set">Title is not set</string>
+    <string name="company_not_set">Company is not set</string>
+    <string name="account_name_not_set">Account name is not set</string>
+    <string name="vendor_name_not_set">Vendor name is not set</string>
+    <string name="vendor_name">Vendor name</string>
+    <string name="lead_source">Lead Source</string>
+    <string name="lead_source_not_set">Lead source is not set</string>
+    <string name="birthday_not_set">Date of birth is not set</string>
 </resources>

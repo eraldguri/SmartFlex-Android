@@ -3,6 +3,7 @@ package com.erald_guri.smartflex_android.ui.settings
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -47,6 +48,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
+
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
 
     }
 

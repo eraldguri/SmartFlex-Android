@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.adapters.ContactListAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.ContactModel
@@ -50,7 +52,8 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
 
     private val onContactListener = object : OnContactListener {
         override fun onDetailView(contactId: Int?) {
-
+            val action = ContactsFragmentDirections.actionNavContactsToContactViewFragment(contactId!!)
+            findNavController().navigate(action)
         }
 
         override fun onEditContact(contactId: Int?) {
@@ -141,6 +144,12 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
             val action = ContactsFragmentDirections.actionNavContactsToAddContactFragment(false, -1)
             findNavController().navigate(action)
         }
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
+        val menu = toolbar?.menu
+        val editMenuItem = menu?.findItem(R.id.action_edit)
+        editMenuItem?.isVisible = false
     }
 
     companion object {

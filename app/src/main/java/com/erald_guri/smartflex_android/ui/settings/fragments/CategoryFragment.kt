@@ -3,6 +3,7 @@ package com.erald_guri.smartflex_android.ui.settings.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erald_guri.smartflex_android.adapters.CategoryAdapter
@@ -48,6 +49,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
+
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
 
     }
 

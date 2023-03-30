@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.erald_guri.smartflex_android.adapters.PriorityAdapter
@@ -80,6 +81,10 @@ class NewTasksFragment : BaseFragment<FragmentNewTaskBinding>(
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
+
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
 
     }
 

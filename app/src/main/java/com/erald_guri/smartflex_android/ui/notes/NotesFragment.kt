@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.erald_guri.smartflex_android.adapters.NoteAdapter
@@ -88,6 +89,10 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
+
     }
 
 }

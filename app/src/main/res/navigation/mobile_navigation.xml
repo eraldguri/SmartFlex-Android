@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_nav_contacts_to_addContactFragment"
             app:destination="@id/addContactFragment" />
+        <action
+            android:id="@+id/action_nav_contacts_to_contactViewFragment"
+            app:destination="@id/contactViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addContactFragment"
@@ -92,4 +95,16 @@
         android:name="com.erald_guri.smartflex_android.ui.settings.fragments.accounts.CreateAccountFragment"
         android:label="@string/create_account"
         tools:layout="@layout/fragment_create_account" />
+    <fragment
+        android:id="@+id/contactViewFragment"
+        android:name="com.erald_guri.smartflex_android.ui.contacts.ContactViewFragment"
+        android:label="Erald Guri"
+        tools:layout="@layout/fragment_contact_view" >
+        <action
+            android:id="@+id/action_contactViewFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+        <argument
+            android:name="contactId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

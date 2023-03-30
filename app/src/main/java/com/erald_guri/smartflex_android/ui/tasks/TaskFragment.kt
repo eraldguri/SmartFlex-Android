@@ -2,6 +2,7 @@ package com.erald_guri.smartflex_android.ui.tasks
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,10 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
+
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
 
     }
 

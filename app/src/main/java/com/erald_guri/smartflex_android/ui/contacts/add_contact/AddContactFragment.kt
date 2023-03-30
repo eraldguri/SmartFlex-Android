@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -225,6 +226,10 @@ class AddContactFragment : BaseFragment<FragmentAddContactBinding>(
 
     override fun onFabButton(fabButton: FloatingActionButton?) {
         fabButton?.hide()
+    }
+
+    override fun onToolbar(toolbar: Toolbar?) {
+
     }
 
     private fun hasCameraPermission(): Boolean {
