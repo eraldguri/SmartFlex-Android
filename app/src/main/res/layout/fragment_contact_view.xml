@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.contacts.ContactViewFragment">
+    tools:context=".ui.contacts.view.ContactViewFragment">
 
    <androidx.constraintlayout.widget.ConstraintLayout
-       android:background="#F9FAFD"
+       android:id="@+id/constraint_heading"
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
+       android:layout_height="wrap_content"
+       android:background="#1a334a"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent">
 
       <de.hdodenhof.circleimageview.CircleImageView
           android:id="@+id/photo"
-          android:layout_width="100dp"
-          android:layout_height="100dp"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
           android:layout_marginStart="24dp"
-          android:layout_marginTop="24dp"
+          android:layout_marginTop="8dp"
+          android:layout_marginBottom="24dp"
           android:src="@drawable/ic_baseline_account_circle_24"
+          app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +35,9 @@
           android:layout_marginStart="16dp"
           android:layout_marginTop="8dp"
           android:text="Erald Guri"
-          style="@style/TextViewFieldStyle"
+          android:textColor="@color/white"
+          android:textSize="16sp"
+          android:textStyle="bold"
           app:layout_constraintStart_toEndOf="@+id/photo"
           app:layout_constraintTop_toTopOf="@+id/photo" />
 
@@ -39,7 +48,7 @@
           android:layout_marginStart="16dp"
           android:layout_marginTop="8dp"
           android:text="eraldguri@live.com"
-          android:textColor="@color/gray"
+          android:textColor="#909CA8"
           app:layout_constraintStart_toEndOf="@+id/photo"
           app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -50,488 +59,52 @@
           android:layout_marginStart="16dp"
           android:layout_marginTop="8dp"
           android:text="TextView"
-          android:textColor="@color/gray"
+          android:textColor="#909CA8"
           app:layout_constraintStart_toEndOf="@+id/photo"
           app:layout_constraintTop_toBottomOf="@+id/tv_email" />
 
-      <TextView
-          android:id="@+id/tv_contact_information"
-          style="@style/TextViewMainStyle"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="24dp"
-          android:text="@string/contact_information"
-          android:textColor="@color/purple"
-          android:textSize="16sp"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/photo" />
+   </androidx.constraintlayout.widget.ConstraintLayout>
 
-      <TableLayout
-          android:id="@+id/table_view"
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/constraint_view"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/constraint_heading">
+
+      <com.google.android.material.tabs.TabLayout
+          android:id="@+id/tab_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="8dp"
-          android:layout_marginEnd="16dp"
+          app:tabTextAppearance="@style/TabTextAppearance"
+          app:tabSelectedTextColor="#87a0d8"
+          app:tabTextColor="#363838"
+          app:tabIndicatorColor="#89a0d7"
+          app:tabIndicatorFullWidth="true"
+          app:tabIndicatorHeight="2dp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tv_contact_information">
-
-         <TableRow
-             android:id="@+id/row_title"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_title"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/title" />
-
-            <TextView
-                android:id="@+id/tv_title_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_company"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_company"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/company"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_company_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_account_name"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_account_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/account_name"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_account_name_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_vendor_name"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_vendor_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/vendor_name"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_vendor_name_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_lead_source"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_lead_source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/lead_source"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_vendor_lead_source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_birthday"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/date_of_birth"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_birthday_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_phone"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_phone_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/phone"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_phone_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_other_phone"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_other_phone_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/other_phone"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_other_phone_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_mobile"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_mobile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/mobile"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_mobile_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_secondary_email"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_secondary_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextViewFieldStyle"
-                android:text="@string/secondary_email"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_secondary_email_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flex"
-                android:layout_weight="1"/>
-         </TableRow>
-      </TableLayout>
-
-      <TextView
-          android:id="@+id/tv_address_information"
-          style="@style/TextViewMainStyle"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="24dp"
-          android:text="@string/address_information"
-          android:textColor="@color/purple"
-          android:textSize="16sp"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/table_view" />
-
-      <TableLayout
-          android:id="@+id/table_view_address"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="8dp"
-          android:layout_marginEnd="16dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tv_address_information">
-
-         <TableRow
-             android:id="@+id/row_street"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_street"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/street" />
-
-            <TextView
-                android:id="@+id/tv_street_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_city"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_city"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/city" />
-
-            <TextView
-                android:id="@+id/tv_city_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_zip_code"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_zip_code"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/zip_code" />
-
-            <TextView
-                android:id="@+id/tv_zip_code_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_other_zip_code"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_other_zip_code"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/other_zip_code" />
-
-            <TextView
-                android:id="@+id/tv_other_zip_code_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_state"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_state"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/state" />
-
-            <TextView
-                android:id="@+id/tv_state_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_other_street"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_other_street"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/other_street" />
-
-            <TextView
-                android:id="@+id/tv_other_street_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_other_city"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_other_city"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/other_city" />
-
-            <TextView
-                android:id="@+id/tv_other_city_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_other_state"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_other_state"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/other_state" />
-
-            <TextView
-                android:id="@+id/tv_other_state_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-         <TableRow
-             android:id="@+id/row_other_country"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_other_country"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/other_country" />
-
-            <TextView
-                android:id="@+id/tv_other_country_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-      </TableLayout>
-
-      <TextView
-          android:id="@+id/tv_description_information"
-          style="@style/TextViewMainStyle"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="24dp"
-          android:text="@string/description_information"
-          android:textColor="@color/purple"
-          android:textSize="16sp"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/table_view_address" />
-
-      <TableLayout
-          android:id="@+id/table_vie_description"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="8dp"
-          android:layout_marginEnd="16dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tv_description_information">
-
-      <TableRow
-          android:id="@+id/row_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_description"
-                style="@style/TextViewFieldStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/description" />
-
-            <TextView
-                android:id="@+id/tv_description_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Android Developer" />
-         </TableRow>
-      </TableLayout>
+          app:layout_constraintTop_toTopOf="parent">
+      </com.google.android.material.tabs.TabLayout>
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+   <androidx.viewpager2.widget.ViewPager2
+       android:id="@+id/view_pager"
+       android:layout_width="0dp"
+       android:layout_height="0dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+   <View
+       android:id="@+id/divider3"
+       android:layout_width="0dp"
+       android:layout_height="1dp"
+       android:background="?android:attr/listDivider"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/constraint_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

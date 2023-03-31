@@ -2,8 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_edit"
+        android:id="@+id/action_call"
         android:orderInCategory="100"
         android:title="@string/edit"
-        app:showAsAction="always" />
+        android:icon="@drawable/ic_baseline_call_24"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_message"
+        android:orderInCategory="100"
+        android:title="@string/edit"
+        android:icon="@drawable/ic_baseline_message_24"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_print"
+        android:orderInCategory="100"
+        android:title="@string/edit"
+        android:icon="@drawable/ic_baseline_print_24"
+        app:showAsAction="ifRoom" />
 </menu>

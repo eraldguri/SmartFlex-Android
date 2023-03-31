@@ -3,7 +3,7 @@
     <style name="Theme.SmartFlexAndroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#f8eee7</item>
-        <item name="colorPrimaryVariant">#fefeff</item>
+        <item name="colorPrimaryVariant">#1a334a</item>
         <item name="colorOnPrimary">@color/white_500</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/dark_blue</item>
@@ -28,10 +28,10 @@
     </style>
 
     <style name="Theme.SmartFlexAndroid.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">#17212d</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:fontFamily">@font/lato</item>
         <item name="elevation">0dp</item>
-        <item name="android:backgroundTint">#fefeff</item>
+        <item name="android:backgroundTint">#1a334a</item>
     </style>
 
     <style name="Theme.SmartFlexAndroid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -77,6 +77,10 @@
         <item name="cornerSizeTopLeft">20dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
     </style>
 
 </resources>

@@ -148,8 +148,8 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
 
     override fun onToolbar(toolbar: Toolbar?) {
         val menu = toolbar?.menu
-        val editMenuItem = menu?.findItem(R.id.action_edit)
-        editMenuItem?.isVisible = false
+//        val editMenuItem = menu?.findItem(R.id.action_edit)
+//        editMenuItem?.isVisible = false
     }
 
     companion object {

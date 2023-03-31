@@ -97,7 +97,7 @@
         tools:layout="@layout/fragment_create_account" />
     <fragment
         android:id="@+id/contactViewFragment"
-        android:name="com.erald_guri.smartflex_android.ui.contacts.ContactViewFragment"
+        android:name="com.erald_guri.smartflex_android.ui.contacts.view.ContactViewFragment"
         android:label="Erald Guri"
         tools:layout="@layout/fragment_contact_view" >
         <action
