@@ -59,17 +59,22 @@ class ContactViewFragment : BaseFragment<FragmentContactViewBinding>(
                         .into(photo)
                 } else {
                     Glide.with(requireContext())
-                        .load(
-                            ContextCompat.getDrawable(
-                                requireContext(),
-                                R.drawable.ic_baseline_emoji_emotions_24
-                            )
-                        )
+                        .load(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_emoji_emotions_24))
                         .override(500, 500)
                         .into(photo)
                 }
                 tvName.text = "${it.firstName} ${it.lastName}"
+
+                onContactDetailsListener?.getContact(it)
             }
+        }
+    }
+
+    companion object {
+        private var onContactDetailsListener: OnContactDetailsListener? = null
+
+        fun setContactDetailsListener(listener: OnContactDetailsListener?) {
+            onContactDetailsListener = listener
         }
     }
 
