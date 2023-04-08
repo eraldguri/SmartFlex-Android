@@ -3,6 +3,7 @@ package com.erald_guri.smartflex_android.ui.calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import com.erald_guri.smartflex_android.base.BaseFragment
@@ -57,10 +58,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(
 
     private fun showBottomDialog(position: Int) {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
-        val dialogBinding = LayoutNewEventBinding.inflate(layoutInflater)
-        bottomSheetDialog.setContentView(dialogBinding.root)
+        dialogBinding = LayoutNewEventBinding.inflate(layoutInflater)
+        bottomSheetDialog.setContentView(dialogBinding!!.root)
 
-        dialogBinding.apply {
+        dialogBinding?.apply {
             edEventTime.setOnClickListener {
                 showTimePickerDialog()
             }
@@ -74,17 +75,21 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(
     }
 
     private fun prepareEvent(position: Int) {
-        val date = dateFormat.format(dates[position])
+        val savedDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val date = savedDateFormat.format(dates[position])
         val month = monthFormat.format(dates[position])
         val year = yearFormat.format(dates[position])
 
-        val eventModel = EventModel(
-            dialogBinding?.edEventName?.text.toString(),
-            dialogBinding?.edEventTime?.text.toString(),
-            date,
-            month, year
-        )
-        addEvent(eventModel)
+        val eventName = dialogBinding?.edEventName?.text.toString()
+        val eventTime = dialogBinding?.edEventTime?.text.toString()
+
+        val eventModel = EventModel(eventName, eventTime , date, month, year)
+
+        if (eventName.isNotEmpty() && eventTime.isNotEmpty()) {
+            addEvent(eventModel)
+        } else {
+            Toast.makeText(requireContext(), "Event name and time are required", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun addEvent(event: EventModel) {
@@ -140,12 +145,14 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(
         viewModel.events.observe(viewLifecycleOwner) {
             val calendarAdapter = CalendarAdapter(requireContext(), calendar, dates, it)
             binding.gridView.adapter = calendarAdapter
+
+            Log.d("events", it.toString())
         }
 
     }
 
     companion object {
-        const val MAX_CALENDAR_DAYS = 42
+        const val MAX_CALENDAR_DAYS = 35
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {

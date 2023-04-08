@@ -72,8 +72,8 @@ class CalendarAdapter(
     }
 
     private fun convertStringToDate(eventDate: String): Date {
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-        var date: Date? = null
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
+        var date: Date? = Date()
         try {
             date = format.parse(eventDate)
         } catch (e: ParseException) {
