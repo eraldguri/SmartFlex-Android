@@ -52,4 +52,5 @@
     <string name="vendor_name">Vendor name</string>
     <string name="lead_source">Lead Source</string>
     <string name="is_not_set">is not set</string>
+    <string name="nav_calendar">Calendar</string>
 </resources>

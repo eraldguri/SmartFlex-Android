@@ -11,9 +11,10 @@ import com.erald_guri.smartflex_android.data.model.*
         CategoryModel::class,
         NoteModel::class,
         ContactModel::class,
-        AccountModel::class
+        AccountModel::class,
+        EventModel::class
     ],
-    version = 17
+    version = 18
 )
 abstract class FlexDatabase : RoomDatabase() {
 
@@ -26,5 +27,7 @@ abstract class FlexDatabase : RoomDatabase() {
     abstract fun contactDao(): ContactDao
 
     abstract fun accountDao(): AccountDao
+
+    abstract fun eventDao(): EventDao
 
 }
