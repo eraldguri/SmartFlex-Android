@@ -5,7 +5,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.EventModel
 import com.erald_guri.smartflex_android.databinding.FragmentCalendarBinding
@@ -88,7 +92,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(
         if (eventName.isNotEmpty() && eventTime.isNotEmpty()) {
             addEvent(eventModel)
         } else {
-            Toast.makeText(requireContext(), "Event name and time are required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.event_name_and_time_required), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -133,8 +137,8 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(
 
         val monthCalendar = calendar.clone() as Calendar
         monthCalendar.set(Calendar.DAY_OF_MONTH, 1)
-        val firstDayOfMonth = monthCalendar.get(Calendar.DAY_OF_WEEK - 1)
-        monthCalendar.add(Calendar.DAY_OF_MONTH, firstDayOfMonth)
+        val firstDayOfMonth = monthCalendar.get(Calendar.DAY_OF_WEEK) - 1
+        monthCalendar.add(Calendar.DAY_OF_MONTH, -firstDayOfMonth)
 
         while (dates.size < MAX_CALENDAR_DAYS) {
             dates.add(monthCalendar.time)
@@ -143,16 +147,33 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(
 
         viewModel.fetchEvents()
         viewModel.events.observe(viewLifecycleOwner) {
-            val calendarAdapter = CalendarAdapter(requireContext(), calendar, dates, it)
-            binding.gridView.adapter = calendarAdapter
+            val calendarAdapter = CalendarAdapter(requireContext(), calendar, dates, it, onShowEventsListener)
+            binding.gridView.apply {
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
+                verticalSpacing = 1
+                horizontalSpacing = 1
+                adapter = calendarAdapter
+            }
+        }
 
-            Log.d("events", it.toString())
+    }
+
+    private val onShowEventsListener = object : CalendarAdapter.OnShowEventsListener {
+        override fun showEvents(recyclerView: RecyclerView, date: String) {
+            viewModel.fetchEventsByDate(date)
+            viewModel.events.observe(viewLifecycleOwner) {
+                val eventAdapter = EventAdapter(it)
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = eventAdapter
+                }
+            }
         }
 
     }
 
     companion object {
-        const val MAX_CALENDAR_DAYS = 35
+        const val MAX_CALENDAR_DAYS = 42
     }
 
     override fun onFabButton(fabButton: FloatingActionButton?) {

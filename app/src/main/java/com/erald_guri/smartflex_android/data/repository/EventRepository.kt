@@ -8,6 +8,8 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
 
     suspend fun selectAll(): List<EventModel> = eventDao.selectAll()
 
+    suspend fun selectEventsByDate(date: String): List<EventModel> = eventDao.selectEventsByDate(date)
+
     suspend fun insertEvent(event: EventModel) = eventDao.insertEvent(event)
 
 }

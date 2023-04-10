@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.data.model.EventModel
 import com.erald_guri.smartflex_android.databinding.LayoutCalendarSingleCellBinding
@@ -19,6 +20,7 @@ class CalendarAdapter(
     private val currentDate: Calendar,
     private val dates: List<Date>,
     private val events: List<EventModel>,
+    private val onShowEventsListener: OnShowEventsListener
 ) : BaseAdapter() {
 
     override fun getCount(): Int = dates.size
@@ -33,7 +35,6 @@ class CalendarAdapter(
         val inflater = LayoutInflater.from(parent?.context)
         val binding = LayoutCalendarSingleCellBinding.inflate(inflater, parent, false)
 
-
         val monthDate = dates[position]
         val dateCalendar = Calendar.getInstance()
         dateCalendar.time = monthDate
@@ -41,7 +42,7 @@ class CalendarAdapter(
         val dayNo = dateCalendar.get(Calendar.DAY_OF_MONTH)
         val displayMonth = dateCalendar.get(Calendar.MONTH) + 1
         val displayYear = dateCalendar.get(Calendar.YEAR)
-        val currentMonth = currentDate.get(Calendar.MONTH + 1)
+        val currentMonth = currentDate.get(Calendar.MONTH) + 1
         val currentYear = currentDate.get(Calendar.YEAR)
 
         if (displayMonth == currentMonth && displayYear == currentYear) {
@@ -57,22 +58,19 @@ class CalendarAdapter(
         events.forEachIndexed { index, eventModel ->
             eventCalendar.time = convertStringToDate(events[index].date)
             if (dayNo == eventCalendar.get(Calendar.DAY_OF_MONTH)
-                && displayMonth == eventCalendar.get(Calendar.MONTH + 1) && displayYear == eventCalendar.get(Calendar.YEAR)) {
+                && displayMonth == eventCalendar.get(Calendar.MONTH) -1 && displayYear == eventCalendar.get(Calendar.YEAR)) {
                 arrayList.add(events[index].event)
-            }
-        }
 
-        if (events.isNotEmpty()) {
-            binding.tvEventId.text = "${arrayList.size} Events"
-        } else {
-            binding.tvEventId.text = ""
+                //TODO: fix error, dates don't match in calendar
+                onShowEventsListener.showEvents(binding.includeRecycler.recycler, events[index].date)
+            }
         }
 
         return binding.root
     }
 
     private fun convertStringToDate(eventDate: String): Date {
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
         var date: Date? = Date()
         try {
             date = format.parse(eventDate)
@@ -81,6 +79,10 @@ class CalendarAdapter(
         }
 
         return date!!
+    }
+
+    interface OnShowEventsListener {
+        fun showEvents(recyclerView: RecyclerView, date: String)
     }
 
 }

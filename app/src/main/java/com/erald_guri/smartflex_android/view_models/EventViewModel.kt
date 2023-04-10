@@ -33,6 +33,17 @@ class EventViewModel @Inject constructor(private val eventRepository: EventRepos
         }
     }
 
+    fun fetchEventsByDate(date: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _events.postValue(eventRepository.selectEventsByDate(date))
+                _success.postValue(ResponseModel(false, "success"))
+            } catch (e: Exception) {
+                _success.postValue(ResponseModel(true, "An error occurred. Please try again!"))
+            }
+        }
+    }
+
     fun addEvent(event: EventModel) {
         viewModelScope.launch(Dispatchers.IO) {
             try {

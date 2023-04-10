@@ -11,6 +11,9 @@ interface EventDao {
     @Query("SELECT * FROM EventModel")
     suspend fun selectAll(): List<EventModel>
 
+    @Query("SELECT * FROM EventModel WHERE date=:date")
+    suspend fun selectEventsByDate(date: String): List<EventModel>
+
     @Insert
     suspend fun insertEvent(event: EventModel)
 
