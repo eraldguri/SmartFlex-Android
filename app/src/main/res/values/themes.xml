@@ -3,7 +3,7 @@
     <style name="Theme.SmartFlexAndroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#f8eee7</item>
-        <item name="colorPrimaryVariant">#1a334a</item>
+        <item name="colorPrimaryVariant">#295feb</item>
         <item name="colorOnPrimary">@color/white_500</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/dark_blue</item>
@@ -31,7 +31,7 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:fontFamily">@font/lato</item>
         <item name="elevation">0dp</item>
-        <item name="android:backgroundTint">#1a334a</item>
+        <item name="android:backgroundTint">#295feb</item>
     </style>
 
     <style name="Theme.SmartFlexAndroid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

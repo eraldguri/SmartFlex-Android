@@ -36,7 +36,6 @@ class ContactListViewHolder(
             }
 
             root.setOnClickListener { onContactListener.onDetailView(item.id) }
-            btnEdit.setOnClickListener { onContactListener.onEditContact(item.id) }
 
             var isFavorite = false
             isFavorite = if (item.isFavorite == 0) {
@@ -55,8 +54,6 @@ class ContactListViewHolder(
                     onContactListener.onFavorite(item, true)
                 }
             }
-            btnCall.setOnClickListener { onContactListener.onCall(item.phone) }
-            btnMessage.setOnClickListener { onContactListener.onMessage() }
         }
     }
 }

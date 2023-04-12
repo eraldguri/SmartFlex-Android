@@ -59,9 +59,9 @@ class AllActivitiesFragmentFragment : BaseFragment<FragmentAllActivitiesFragment
 
     private fun callPermission(phone: String) {
         if (hasCallPermission()) {
-            val intentCall = Intent(Intent.ACTION_CALL)
-            intentCall.data = Uri.parse("tel:$phone")
-            startActivity(intentCall)
+//            val intentCall = Intent(Intent.ACTION_CALL)
+//            intentCall.data = Uri.parse("tel:$phone")
+//            startActivity(intentCall)
         } else {
             EasyPermissions.requestPermissions(requireActivity(),
                 "SmartFlex needs camera permissions",
