@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.contacts.view.tabs.ContactInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tv_contact_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Contact Info" />
+        android:layout_height="wrap_content"
+        android:background="@color/pink"
+        android:text="@string/contact_information"
+        android:padding="8dp"
+        android:textColor="@color/gray"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TableLayout
+        android:id="@+id/tb_contact_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:stretchColumns="*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_info">
+
+<!--        <TableRow-->
+<!--            android:id="@+id/row_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="8dp"-->
+<!--            android:paddingEnd="8dp">-->
+
+<!--            <TextView-->
+<!--                style="@style/TextViewMainStyle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/title" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_title"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Android Developer" />-->
+
+<!--        </TableRow>-->
+
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
