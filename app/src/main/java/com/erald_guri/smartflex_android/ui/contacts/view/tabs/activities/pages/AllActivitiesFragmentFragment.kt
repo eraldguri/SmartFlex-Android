@@ -2,21 +2,19 @@ package com.erald_guri.smartflex_android.ui.contacts.view.tabs.activities.pages
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erald_guri.smartflex_android.R
-import com.erald_guri.smartflex_android.adapters.ItemMenuAdapter
 import com.erald_guri.smartflex_android.base.BaseFragment
-import com.erald_guri.smartflex_android.data.model.ContactModel
+import com.erald_guri.smartflex_android.base.FlexAdapter
 import com.erald_guri.smartflex_android.data.model.ItemMenuModel
 import com.erald_guri.smartflex_android.databinding.FragmentAllActivitiesFragmentBinding
-import com.erald_guri.smartflex_android.ui.contacts.view.ContactViewFragment
-import com.erald_guri.smartflex_android.ui.contacts.view.OnContactDetailsListener
+import com.erald_guri.smartflex_android.databinding.LayoutMenuItemBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -27,6 +25,8 @@ class AllActivitiesFragmentFragment : BaseFragment<FragmentAllActivitiesFragment
     FragmentAllActivitiesFragmentBinding::inflate
 ), EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
+    private var menuItemAdapter = FlexAdapter<ItemMenuModel>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,22 +36,30 @@ class AllActivitiesFragmentFragment : BaseFragment<FragmentAllActivitiesFragment
         menuItems.add(ItemMenuModel(3, R.drawable.ic_baseline_edit_calendar_24, "Meeting", 2))
         menuItems.add(ItemMenuModel(4, R.drawable.ic_baseline_call_log, "Call logs", 5))
 
-        val menuAdapter = ItemMenuAdapter(menuItems)
-        binding.includeRecycler.recycler.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = menuAdapter
-        }
-
-        ContactViewFragment.setContactDetailsListener(onContactDetailsListener)
-    }
-
-    private val onContactDetailsListener = object : OnContactDetailsListener {
-        override fun getContact(contact: ContactModel) {
-            if (contact.phone.isNotEmpty()) {
-                callPermission(contact.phone)
+        menuItemAdapter.items = menuItems.toMutableList()
+        menuItemAdapter.expressionViewHolderBinding = { item, viewBinding ->
+            val view = viewBinding as LayoutMenuItemBinding
+            view.apply {
+                imgIcon.setImageResource(item.icon)
+                tvTitle.text = "${item.title} (${item.numItems})"
             }
         }
+        menuItemAdapter.expressionOnCreateViewHolder = { viewGroup ->
+            LayoutMenuItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        }
+        binding.includeRecycler.recycler.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = menuItemAdapter
+        }
     }
+
+//    private val onContactDetailsListener = object : OnContactDetailsListener {
+//        override fun getContact(contact: ContactModel) {
+//            if (contact.phone.isNotEmpty()) {
+//                callPermission(contact.phone)
+//            }
+//        }
+//    }
 
     private fun hasCallPermission(): Boolean {
         return EasyPermissions.hasPermissions(requireContext(), Manifest.permission.CALL_PHONE)

@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.base.BaseFragment
+import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.FragmentContactViewBinding
+import com.erald_guri.smartflex_android.ui.contacts.view.tabs.ContactInfoFragment
 import com.erald_guri.smartflex_android.ui.contacts.view.tabs.adapter.ContactPagerAdapter
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,6 +46,7 @@ class ContactViewFragment : BaseFragment<FragmentContactViewBinding>(
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabNames[position]
         }.attach()
+        
     }
 
     @SuppressLint("SetTextI18n")
@@ -64,17 +68,7 @@ class ContactViewFragment : BaseFragment<FragmentContactViewBinding>(
                         .into(photo)
                 }
                 tvName.text = "${it.firstName} ${it.lastName}"
-
-                onContactDetailsListener?.getContact(it)
             }
-        }
-    }
-
-    companion object {
-        private var onContactDetailsListener: OnContactDetailsListener? = null
-
-        fun setContactDetailsListener(listener: OnContactDetailsListener?) {
-            onContactDetailsListener = listener
         }
     }
 

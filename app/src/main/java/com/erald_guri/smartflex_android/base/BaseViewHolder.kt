@@ -1,10 +1,24 @@
 package com.erald_guri.smartflex_android.base
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+open class BaseViewHolder<T> internal constructor(
+    private val binding: ViewBinding,
+    private val expression: (T, ViewBinding) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
-    abstract fun onBind(item: T)
+    fun onBind(item: T) {
+        expression(item, binding)
+    }
+
+    fun onBind(item: T, onItemClickListener: FlexAdapter.OnItemClickListener<T>?) {
+        expression(item, binding)
+
+        binding.root.setOnClickListener {
+            onItemClickListener?.onClick(adapterPosition, item)
+        }
+
+    }
 
 }

@@ -12,41 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_tasks"
-        android:name="com.erald_guri.smartflex_android.ui.tasks.TaskFragment"
-        android:label="@string/menu_tasks"
-        tools:layout="@layout/fragment_task" >
-        <action
-            android:id="@+id/action_nav_tasks_to_nav_new_task"
-            app:destination="@id/nav_new_task" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_notes"
-        android:name="com.erald_guri.smartflex_android.ui.notes.NotesFragment"
-        android:label="@string/menu_notes"
-        tools:layout="@layout/fragment_notes" />
-    <fragment
-        android:id="@+id/nav_new_task"
-        android:name="com.erald_guri.smartflex_android.ui.tasks.NewTasksFragment"
-        android:label="@string/menu_tasks"
-        tools:layout="@layout/fragment_new_task" />
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.erald_guri.smartflex_android.ui.settings.SettingsFragment"
-        android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings" >
-        <action
-            android:id="@+id/action_nav_settings_to_categoryFragment"
-            app:destination="@id/categoryFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.erald_guri.smartflex_android.ui.settings.fragments.CategoryFragment"
-        android:label="@string/category"
-        tools:layout="@layout/fragment_category" >
-    </fragment>
-    <fragment
         android:id="@+id/nav_contacts"
         android:name="com.erald_guri.smartflex_android.ui.contacts.ContactsFragment"
         android:label="@string/menu_contacts"
@@ -82,15 +47,6 @@
         android:label="fragment_preview"
         tools:layout="@layout/fragment_preview" />
     <fragment
-        android:id="@+id/nav_accounts"
-        android:name="com.erald_guri.smartflex_android.ui.settings.fragments.accounts.AccountsFragment"
-        android:label="@string/accounts"
-        tools:layout="@layout/fragment_accounts" >
-        <action
-            android:id="@+id/action_nav_accounts_to_createAccountFragment"
-            app:destination="@id/createAccountFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/createAccountFragment"
         android:name="com.erald_guri.smartflex_android.ui.settings.fragments.accounts.CreateAccountFragment"
         android:label="@string/create_account"
@@ -107,9 +63,4 @@
             android:name="contactId"
             app:argType="integer" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_calendar"
-        android:name="com.erald_guri.smartflex_android.ui.calendar.CalendarFragment"
-        android:label="@string/nav_calendar"
-        tools:layout="@layout/fragment_calendar" />
 </navigation>

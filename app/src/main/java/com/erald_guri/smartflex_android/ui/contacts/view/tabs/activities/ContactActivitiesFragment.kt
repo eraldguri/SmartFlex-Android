@@ -1,6 +1,7 @@
 package com.erald_guri.smartflex_android.ui.contacts.view.tabs.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
@@ -8,7 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.erald_guri.smartflex_android.R
 import com.erald_guri.smartflex_android.base.BaseFragment
+import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.FragmentContactActivitiesBinding
+import com.erald_guri.smartflex_android.ui.contacts.view.ContactViewFragment
+import com.erald_guri.smartflex_android.ui.contacts.view.OnContactDetailsListener
 import com.erald_guri.smartflex_android.ui.contacts.view.tabs.activities.pages.ActivityTimelineFragment
 import com.erald_guri.smartflex_android.ui.contacts.view.tabs.activities.pages.AllActivitiesFragmentFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton

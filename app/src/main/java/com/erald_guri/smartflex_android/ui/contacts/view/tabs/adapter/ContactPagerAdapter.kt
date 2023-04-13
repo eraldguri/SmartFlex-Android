@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.ui.contacts.view.tabs.ContactAccountsFragment
 import com.erald_guri.smartflex_android.ui.contacts.view.tabs.activities.ContactActivitiesFragment
 import com.erald_guri.smartflex_android.ui.contacts.view.tabs.ContactInfoFragment

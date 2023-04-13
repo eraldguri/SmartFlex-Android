@@ -3,19 +3,20 @@ package com.erald_guri.smartflex_android.ui.contacts.view.tabs
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.viewModels
 import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.FragmentContactInfoBinding
 import com.erald_guri.smartflex_android.ui.contacts.view.ContactViewFragment
-import com.erald_guri.smartflex_android.ui.contacts.view.OnContactDetailsListener
+import com.erald_guri.smartflex_android.utils.parcelable
+import com.erald_guri.smartflex_android.view_models.ContactViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ContactInfoFragment : BaseFragment<FragmentContactInfoBinding>(
     FragmentContactInfoBinding::inflate
 ) {
@@ -23,21 +24,23 @@ class ContactInfoFragment : BaseFragment<FragmentContactInfoBinding>(
     val headers = arrayOf("Title", "Company", "Account Name", "Vendor Name", "Lead Source", "Birthdate",
         "Phone", "Other Phone", "Mobile", "Secondary Email")
 
+    private val viewModel by viewModels<ContactViewModel>()
+
+    private var contactId: Int = -1
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ContactViewFragment.setContactDetailsListener(onContactDetailsListener)
+        var args = requireArguments()
 
-    }
-
-    private val onContactDetailsListener = object : OnContactDetailsListener {
-        override fun getContact(contact: ContactModel) {
-            val values = arrayOf(
-                contact.title, contact.company, contact.accountName, contact.vendorName, contact.leadSource,
-                contact.dateOfBirth, contact.phone, contact.otherPhone, contact.mobile, contact.secondaryEmail
-            )
-            initTableView(values)
-        }
+//        args?.let {
+//            contactId = it.getInt("contact_id")
+//        }
+//
+//        viewModel.getContactById(contactId)
+//        viewModel.contact.observe(viewLifecycleOwner) {
+//            Log.d("contact", it.toString())
+//        }
     }
 
     private fun initTableView(values: Array<String>) {
