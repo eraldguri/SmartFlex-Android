@@ -14,7 +14,7 @@
         android:layout_marginTop="32dp"
         android:text="Permissions required"
         android:textSize="24sp"
-        android:textColor="@color/blue_500"
+        android:textColor="@color/color_blue"
         android:textStyle="bold"
         android:fontFamily="@font/lato"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,9 +7,8 @@
     android:background="#f9f8f8"
     tools:context=".ui.contacts.ContactsFragment">
 
-    <include
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/include_recycler"
-        layout="@layout/layout_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="32dp"

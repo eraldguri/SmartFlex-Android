@@ -15,52 +15,19 @@
         android:id="@+id/nav_contacts"
         android:name="com.erald_guri.smartflex_android.ui.contacts.ContactsFragment"
         android:label="@string/menu_contacts"
-        tools:layout="@layout/fragment_contacts" >
+        tools:layout="@layout/fragment_contacts" />
+    <fragment
+        android:id="@+id/nav_tasks"
+        android:name="com.erald_guri.smartflex_android.ui.tasks.TasksFragment"
+        android:label="@string/menu_tasks"
+        tools:layout="@layout/fragment_tasks" >
         <action
-            android:id="@+id/action_nav_contacts_to_addContactFragment"
-            app:destination="@id/addContactFragment" />
-        <action
-            android:id="@+id/action_nav_contacts_to_contactViewFragment"
-            app:destination="@id/contactViewFragment" />
+            android:id="@+id/action_nav_tasks_to_newTaskFragment"
+            app:destination="@id/newTaskFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addContactFragment"
-        android:name="com.erald_guri.smartflex_android.ui.contacts.add_contact.AddContactFragment"
-        android:label="@string/add_new_contact"
-        tools:layout="@layout/fragment_add_contact" >
-        <action
-            android:id="@+id/action_addContactFragment_to_previewFragment"
-            app:destination="@id/previewFragment" />
-        <action
-            android:id="@+id/action_addContactFragment_to_nav_contacts"
-            app:destination="@id/nav_contacts" />
-        <argument
-            android:name="isEditMode"
-            app:argType="boolean" />
-        <argument
-            android:name="contactId"
-            app:argType="integer" />
-    </fragment>
-    <fragment
-        android:id="@+id/previewFragment"
-        android:name="com.erald_guri.smartflex_android.ui.camera.PreviewFragment"
-        android:label="fragment_preview"
-        tools:layout="@layout/fragment_preview" />
-    <fragment
-        android:id="@+id/createAccountFragment"
-        android:name="com.erald_guri.smartflex_android.ui.settings.fragments.accounts.CreateAccountFragment"
-        android:label="@string/create_account"
-        tools:layout="@layout/fragment_create_account" />
-    <fragment
-        android:id="@+id/contactViewFragment"
-        android:name="com.erald_guri.smartflex_android.ui.contacts.view.ContactViewFragment"
-        android:label="Erald Guri"
-        tools:layout="@layout/fragment_contact_view" >
-        <action
-            android:id="@+id/action_contactViewFragment_to_addContactFragment"
-            app:destination="@id/addContactFragment" />
-        <argument
-            android:name="contactId"
-            app:argType="integer" />
-    </fragment>
+        android:id="@+id/newTaskFragment"
+        android:name="com.erald_guri.smartflex_android.ui.tasks.NewTaskFragment"
+        android:label="@string/create_new_task"
+        tools:layout="@layout/fragment_new_task" />
 </navigation>

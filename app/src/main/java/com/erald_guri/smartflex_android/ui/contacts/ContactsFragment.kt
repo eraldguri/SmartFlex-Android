@@ -19,7 +19,6 @@ import com.erald_guri.smartflex_android.base.BaseFragment
 import com.erald_guri.smartflex_android.base.FlexAdapter
 import com.erald_guri.smartflex_android.data.model.ContactModel
 import com.erald_guri.smartflex_android.databinding.FragmentContactsBinding
-import com.erald_guri.smartflex_android.databinding.LayoutContactListItemBinding
 import com.erald_guri.smartflex_android.interfaces.OnContactListener
 import com.erald_guri.smartflex_android.view_models.ContactViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,116 +39,71 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeContacts()
+//        observeContacts()
     }
 
-    private fun observeContacts() {
-        viewModel.fetchContacts()
-        viewModel.contacts.observe(viewLifecycleOwner) {
-            contactAdapter.items = it.toMutableList()
+//    private fun observeContacts() {
+//        viewModel.fetchContacts()
+//        viewModel.contacts.observe(viewLifecycleOwner) {
+//            contactAdapter.items = it.toMutableList()
+//
+//            contactAdapter.expressionViewHolderBinding = { item, viewBinding ->
+//                val view = viewBinding as LayoutContactListItemBinding
+//                setupRecyclerViewHolder(item, view)
+//            }
+//
+//            contactAdapter.setOnClickListener(onItemClickListener)
+//
+//            contactAdapter.expressionOnCreateViewHolder = { viewGroup ->
+//                LayoutContactListItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+//            }
+//
+//            binding.includeRecycler.recycler.apply {
+//                layoutManager = LinearLayoutManager(requireContext())
+//                adapter = contactAdapter
+//            }
+//        }
+//    }
 
-            contactAdapter.expressionViewHolderBinding = { item, viewBinding ->
-                val view = viewBinding as LayoutContactListItemBinding
-                setupRecyclerViewHolder(item, view)
-            }
+//    private fun setupRecyclerViewHolder(item: ContactModel, viewBinding: LayoutContactListItemBinding) {
+//        viewBinding.apply {
+//            tvFullName.text = "${item.firstName} ${item.lastName}"
+//            tvTitle.text = item.title
+//
+//            val imageUri = Uri.parse(item.photoPath)
+//            imageView.imageTintMode = null
+//            if (item.photoPath.isNotEmpty()) {
+//                Glide.with(requireContext())
+//                    .load("file:" + imageUri)
+//                    .override(500, 500)
+//                    .into(imageView)
+//            } else {
+//                Glide.with(requireContext())
+//                    .load(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_emoji_emotions_24))
+//                    .override(500, 500)
+//                    .into(imageView)
+//            }
+//
+//            var isFavorite = false
+//            isFavorite = if (item.isFavorite == 0) {
+//                btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_outline))
+//                false
+//            } else {
+//                btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_filled))
+//                true
+//            }
+//            btnFavorite.setOnClickListener {
+//                if (isFavorite) {
+//                    btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_outline))
+//                    onContactListener.onFavorite(item, false)
+//                } else {
+//                    btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_filled))
+//                    onContactListener.onFavorite(item, true)
+//                }
+//            }
+//        }
+//    }
 
-            contactAdapter.setOnClickListener(onItemClickListener)
-
-            contactAdapter.expressionOnCreateViewHolder = { viewGroup ->
-                LayoutContactListItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-            }
-
-            binding.includeRecycler.recycler.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = contactAdapter
-            }
-        }
-    }
-
-    private fun setupRecyclerViewHolder(item: ContactModel, viewBinding: LayoutContactListItemBinding) {
-        viewBinding.apply {
-            tvFullName.text = "${item.firstName} ${item.lastName}"
-            tvTitle.text = item.title
-
-            val imageUri = Uri.parse(item.photoPath)
-            imageView.imageTintMode = null
-            if (item.photoPath.isNotEmpty()) {
-                Glide.with(requireContext())
-                    .load("file:" + imageUri)
-                    .override(500, 500)
-                    .into(imageView)
-            } else {
-                Glide.with(requireContext())
-                    .load(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_emoji_emotions_24))
-                    .override(500, 500)
-                    .into(imageView)
-            }
-
-            var isFavorite = false
-            isFavorite = if (item.isFavorite == 0) {
-                btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_outline))
-                false
-            } else {
-                btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_filled))
-                true
-            }
-            btnFavorite.setOnClickListener {
-                if (isFavorite) {
-                    btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_outline))
-                    onContactListener.onFavorite(item, false)
-                } else {
-                    btnFavorite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_filled))
-                    onContactListener.onFavorite(item, true)
-                }
-            }
-        }
-    }
-
-    private val onItemClickListener = object : FlexAdapter.OnItemClickListener<ContactModel> {
-
-        override fun onClick(position: Int, item: ContactModel) {
-            val action = ContactsFragmentDirections.actionNavContactsToContactViewFragment(item.id!!)
-            findNavController().navigate(action)
-        }
-
-    }
-
-    private val onContactListener = object : OnContactListener {
-        override fun onDetailView(contactId: Int?) {
-            val action = ContactsFragmentDirections.actionNavContactsToContactViewFragment(contactId!!)
-            findNavController().navigate(action)
-        }
-
-        override fun onEditContact(contactId: Int?) {
-            val action = ContactsFragmentDirections.actionNavContactsToAddContactFragment(true, contactId!!)
-            findNavController().navigate(action)
-        }
-
-        override fun onDeleteContact() {
-
-        }
-
-        override fun onFavorite(contact: ContactModel, isFavorite: Boolean) {
-            if (isFavorite) {
-                contact.isFavorite = 1
-                viewModel.addToFavorites(contact)
-            } else {
-                contact.isFavorite = 0
-                viewModel.addToFavorites(contact)
-            }
-        }
-
-        override fun onCall(phone: String) {
-            if (phone.isNotEmpty()) {
-                callPermission(phone)
-            }
-        }
-
-        override fun onMessage() {
-
-        }
-
-    }
 
     private fun hasCallPermission(): Boolean {
         return EasyPermissions.hasPermissions(requireContext(), Manifest.permission.CALL_PHONE)
@@ -205,8 +159,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding>(
     override fun onFabButton(fabButton: FloatingActionButton?) {
         fabButton?.show()
         fabButton?.setOnClickListener {
-            val action = ContactsFragmentDirections.actionNavContactsToAddContactFragment(false, -1)
-            findNavController().navigate(action)
+
         }
     }
 

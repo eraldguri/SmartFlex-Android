@@ -54,4 +54,5 @@
     <string name="is_not_set">is not set</string>
     <string name="nav_calendar">Calendar</string>
     <string name="event_name_and_time_required">Event name and time are required</string>
+    <string name="create_new_task">Create new task</string>
 </resources>
